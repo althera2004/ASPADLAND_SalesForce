@@ -77,10 +77,11 @@
                     var record = result as Producto_ASPAD__c;
                     var colectivo = new Colectivo
                     {
-                        ProductoName = record.Nombre_Compa_ia__c
+                         Id = record.Id,
+                         Description = record.Nombre_Compa_ia__c
                     };
 
-                    if (!res.Any(c => c.ProductoName.Equals(colectivo.ProductoName, StringComparison.OrdinalIgnoreCase)))
+                    if (!res.Any(c => c.Description.Equals(colectivo.Description, StringComparison.OrdinalIgnoreCase)))
                     {
                         res.Add(colectivo);
                     }
@@ -94,16 +95,18 @@
         {
             get
             {
+                return AllASPAD;
+                // weke
                 var res = new List<Colectivo>();
                 var user = HttpContext.Current.Session["User"] as ApplicationUser;
                 var query = string.Format(
                     CultureInfo.InvariantCulture,
                     @"SELECT 
-                        Producto_ASPAD__r.Name
+                        Producto_ASPAD__c
                         Centro_c
                     FROM Relaci_n_Productos_Centros__c
                     WHERE
-                        Id not IN (SELECT Acto__c FROM Actos_en_Centro__c WHERE Cuenta__r.Usuario_ASPADLand__c = '{0}')",
+                        Id IN (SELECT Acto__c FROM Actos_en_Centro__c WHERE Cuenta__r.Usuario_ASPADLand__c = '{0}')",
                     user.Id);
                 var colectivos = Tools.SalesForcceQuery(query);
                 foreach (var result in colectivos.records)

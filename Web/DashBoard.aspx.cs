@@ -75,7 +75,7 @@ public partial class Customer_DashBoard : Page
     private void RenderColectivos()
     {
         var res = new StringBuilder();
-        var colectivos = Session["Colectivos"] as List<Colectivo>;
+        var colectivos = Session["Colectivos"] as ReadOnlyCollection<Colectivo>;
         var colectivosASPAD = Session["ColectivosASPAD"] as ReadOnlyCollection<Colectivo>;
         if(colectivosASPAD != null)
         {
@@ -85,7 +85,7 @@ public partial class Customer_DashBoard : Page
                 {
                     res.AppendFormat(
                         CultureInfo.InvariantCulture,
-                        @"<img src=""/logopolizas/{0}.png"" alt=""{1}"" title=""{1}"" id=""{0}"" onclick=""Go(this);"" style=""margin:20px;cursor:pointer;"" />",
+                        @"<img src=""/logopolizas/{1}.png"" alt=""{1}"" title=""{1}"" id=""{0}"" onclick=""Go(this);"" style=""margin:20px;cursor:pointer;"" />",
                         colectivo.Id,
                         colectivo.Description);
                 }
@@ -93,7 +93,7 @@ public partial class Customer_DashBoard : Page
                 {
                     res.AppendFormat(
                         CultureInfo.InvariantCulture,
-                        @"<img src=""/logopolizas/{0}_bn.png"" alt=""{1}"" id=""{0}"" style=""margin:20px;cursor:pointer;"" class=""tooltip-error"" title=""{2}"" data-rel=""tooltip"" data-placement=""bottom"" />",
+                        @"<img src=""/logopolizas/{1}_bn.png"" alt=""{1}"" id=""{0}"" style=""margin:20px;cursor:pointer;"" class=""tooltip-error"" title=""{2}"" data-rel=""tooltip"" data-placement=""bottom"" />",
                         colectivo.Id,
                         colectivo.Description,
                         this.Dictionary["DashBoard_NOASPAD"]);
