@@ -348,3 +348,8 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/AspaLandFramework/templates
+/Web/DocsPrivados
+/Web/logopolizas/Thumbs.db
+/Web/Temp
+/Web/{8A791886-7485-48D9-9D0B-9DA99889B0A9}

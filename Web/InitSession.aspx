@@ -1,0 +1,1 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="InitSession.aspx.cs" Inherits="Customer_InitSession" %>

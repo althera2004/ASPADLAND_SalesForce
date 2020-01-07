@@ -1,0 +1,656 @@
+﻿Item_UserProfile_ChangeDataMessage::Si detecta algún dato incorrecto debería modificarlo y clickar en el botón de &quot;<strong>Enviar cambios</strong>&quot; para que se pueda proceder a su corrección.
+Añadir::Añadir
+Avatar::Avatar
+Commo_Error_FilterDateFrom::Fecha de inicio no válida
+Commo_Error_FilterDateTo::Fecha final no válida
+Common_Accept::Aceptar
+Common_Access::Acceder
+Common_Action_Success::Operación realizada con éxito
+Common_Active::Activo
+Common_Active_Plural::Activo
+Common_ActualMonth::Mes actual
+Common_Add::Añadir
+Common_Alerts::Avisos
+Common_All::Todos
+Common_All_Female::Toda					   
+Common_All_Female_Plural::Todas
+Common_All_Male::Todo
+Common_All_Male_Plural::Todos
+Common_AlreadyExists::Ya existe
+Common_ListNoData::Hay hay resultados
+Common_Back::Volver
+Common_Cancel::Cancelar
+Common_CanNotDelete::No se puede eliminar
+Common_Change::Cambiar
+Common_Chronometer_Hours::horas
+Common_Chronometer_Minutes::minutos
+Common_Chronometer_Seconds::segundos
+Common_TimeoutMessage::Se a superado el tiempo de inactividad
+Common_Code::Código
+Common_Color_Blue::Azúl
+Common_Color_Green::Verde
+Common_Color_Red::Rojo
+Common_Color_Yellow::Amarillo
+Common_Comparer_eq::igual a
+Common_Undefined::No definido
+Common_Undefined_Male::No definido
+Common_Undefined_Female::No definida
+Common_Comparer_eqgt::mayor o igual que
+Common_Comparer_eqlt::menor o igual que
+Common_Comparer_gt::mayor que
+Common_Comparer_lt::menor que
+Common_ComparerSign_eq::=
+Common_ComparerSign_eqgt::>=
+Common_ComparerSign_eqlt::<=
+Common_ComparerSign_gt::>
+Common_ComparerSign_lt::<
+Common_Configuration::Panel de control
+Common_CreatedBy::Generado por
+Common_Date::Fecha
+Common_DateClose::Fecha cierre
+Common_DateExecution::F. prevista
+Common_Day::Día
+Common_Days::Días
+Common_Delete::Eliminar
+Common_Discard::Descartar
+Common_DeleteMessage::¿Seguro que quiere eliminar									
+Common_Edit::Editar
+Common_Error::Error
+Common_Error_Application::Se ha producido un error en la aplicación
+Common_Error_BeforeStart::La fecha no puede ser anterior a la de inicio
+Common_Error_DateMalformed::La fecha no es correcta
+Common_Error_IncorrectMail::El correo es incorrecto
+Common_Error_IncorrectPassword::Contraseña no válida
+Common_Error_Kernel_Delete::No se puede eliminar porque es parte básica de la aplicación
+Common_Error_Kernel_Edit::No se puede modificar porque es parte básica de la aplicación
+Common_Error_LastActive::No se puede eliminar porque es la única definida
+Common_Error_MaximumToday::La fecha no puede ser posterior a hoy
+Common_Error_MinimumOneAction::Escoger una opción
+Common_Error_MoneyMalformed::No es un valor correcto
+Common_Error_NameAlreadyExists::Ya existe
+Common_Error_NoAccess::El elemento seleccionado no está disponible
+Common_Error_NoCalibrationsDefined::No hay calibraciones definidas
+Common_Error_NoDeletable::No se puede eliminar
+Common_Error_NoEditable::No se puede modificar
+Common_Error_NoFileSelected::Se ha de seleccionar un fichero
+Common_Error_NoVerificationsDefined::No hay verificaciones definidas
+Common_Error_UnsupportedFile::Tipo de documento no admitido
+Common_Error_UserCanNotAccess::El usuario no tiene permisos para acceder a la aplicación
+Common_ErrorMessage_CanNotDelete::No se puede eliminar
+Common_ErrorMessage_InUse::No se puede eliminar porque está en uso
+Common_ErrorMessage_IsSelected::Ya está seleccionado
+Common_Exit::Salir
+Common_External::Externo
+Common_Filter::Filtrar
+Common_FinishDate::Finalización
+Common_Form_Errors::Revise los datos del formulario
+Common_From::Desde
+Common_Here::aquí
+Common_Home::Inicio
+Common_Inactive::Inactivo
+Common_Inactive_Plural::Inactivos
+Common_Internal::Interno
+Common_Label_Days::días
+Common_Label_Months::meses
+Common_Label_Weeks::semanas
+Common_Label_Years::años
+Common_LastWeek::Última semana
+Common_ListPdf::Imprimir
+Common_Message_Deleting::Eliminando...
+Common_Message_FormErrors::Revise los datos del formulario
+Common_Message_Saving::Guardando...
+Common_ModifiedBy::Modificado por
+Common_Modify::Modificar
+Common_Month::Mes
+Common_MonthName_April::Abril
+Common_MonthName_August::Agosto
+Common_MonthName_December::Diciembre
+Common_MonthName_February::Febrero
+Common_MonthName_January::Enero
+Common_MonthName_July::Julio
+Common_MonthName_June::Junio
+Common_MonthName_March::Marzo
+Common_MonthName_May::Mayo
+Common_MonthName_November::Noviembre
+Common_MonthName_October::Octubre
+Common_MonthName_September::Septiembre
+Common_Months::Meses
+Common_Name::Usuario
+Common_New::Nuevo
+Common_Next::Siguiente
+Common_No::No
+Common_NoAlerts::<strong>¡Felicidades!</strong><br />No hay ninguna alerta pendiente
+Common_NoGrants::Usuario sin permisos
+Common_NoGrants_Explanation::Póngase en contacto con el administrador de la aplicación en la siguiente dirección de correo
+Common_None::Ninguno
+Common_None_Female::Ninguna
+Common_None_Male::Ninguno
+Common_NotSet_Female::No especificada
+Common_NotSet_Male::No especificado
+Common_Period::Periodo
+Common_PeriodAll::Todo el periodo
+Common_Previous::Anterior
+Common_PrintExcel::Imprimir en Excel
+Common_PrintPdf::Imprimir en PDF
+Common_RegisterCount::Nº registros
+Common_Report_Rendering::Generando informe...
+Common_Required::Obligatorio
+Common_Responsible::Responsable
+Common_Save::Guardar
+Common_Search::Buscar
+Common_Searching::Buscando...
+Common_SelectAll todos::Seleccionar todos
+Common_SelectAll::Seleccionar
+Common_Selected::Seleccionado
+Common_SelectOne::Seleccionar
+Common_ShowAll::Ver todo
+Common_Status::Estado
+Common_Target::Objetivo
+Common_Task::Tarea
+Common_ThisMonth::Este mes
+Common_ThisWeek::esta semana
+Common_TiemoutSessionTitle::La sesión ha terminado
+Common_TimeoutSessionMessage::Se ha superado el tiempo permitido de inactividad
+Common_Title_Views::Visualizaciones
+Common_To:Hasta
+Common_Today::Hoy
+Common_Total::Total
+Common_Update::Modificar
+Common_View::Ver
+Common_ViewAll::Ver todo
+Common_VoidData::Sin datos
+Common_VoidSearchResult::La búsqueda no ha encontrado datos
+Common_Warning::Aviso
+Common_Warning_BrowserOld::Se ha de actializar el navegador
+Common_Warning_ImageRequired::Se ha de seleccionar una imagen
+Common_Warning_ImageTooBig:: Imagen muy grande <br />Se ha de reducir el tamaño.
+Common_Warning_MimeType::tipus de arxiu no admès
+Common_Warning_Undelete::No se puede eliminar porque tiene registros asociados
+Common_Week::Semana
+Common_WeekDayName_Friday::Viernes
+Common_WeekDayName_Monday::Lunes
+Common_WeekDayName_Saturday::Sábado
+Common_WeekDayName_Sunday::Domingo
+Common_WeekDayName_Thursday::Jueves
+Common_WeekDayName_Tuesday::Martes
+Common_WeekDayName_Wednesday::Miércoles
+Common_WeekDayShortName_Friday::Viernes
+Common_WeekDayShortName_Monday::lu
+Common_WeekDayShortName_Saturday::sa
+Common_WeekDayShortName_Sunday::dm
+Common_WeekDayShortName_Thursday::ju
+Common_WeekDayShortName_Tuesday::ma
+Common_WeekDayShortName_Wednesday::mi
+Common_Welcome::Bienvenido
+Common_Working::Acción en proceso
+Common_Year::Año
+Common_Years::Años
+Common_Yes::Sí
+CompanyProfile::Datos de empresa
+Email::Correo
+Fin::Fin
+Item_Action_Popup_Details_Title::Detalles de la acción
+Item_Alert_ListHeader_Description::Descripción
+Item_Alert_ListHeader_Reason::Motivo
+Item_Alerts::Avisos
+Item_Attach_DiskFreeLabel1::Disponible el 
+Item_Attach_DiskFreeLabel2::% de asignación de disco
+Item_Attach_DiskQuote::Cuota de disco asignada:
+Item_Attach_FreeDisk::Espacio disponible
+Item_Attach_Popup_Delete_Question::¿Eliminar el adjunto?
+Item_Attach_Popup_Delete_Title::Eliminar adjunto
+Item_Attachment_Btn_New::Añadir documento
+Item_Attachment_CreateDate::Subido el
+Item_Attachment_Description::Descripción
+Item_Attachment_Header_CreateDate::Subido el
+Item_Attachment_Header_Description::Descripción
+Item_Attachment_Header_FileName::Fichero
+Item_Attachment_Header_Size::Tamaño
+Item_Attachment_Popup_Warning::Esta acción no se puede deshacer
+Item_Attachment_SectionTitle::Documentos adjuntos
+Item_Attachment_Size::Tamaño
+Item_BusinesRisk_ListHeader_Date::Fecha
+Item_BusinesRisk_ListHeader_Description::Riesgo
+Item_BusinesRisk_ListHeader_IPR::IPR
+Item_BusinesRisk_ListHeader_Process::Proceso
+Item_BusinesRisk_ListHeader_Result::Final
+Item_BusinesRisk_ListHeader_Rule::Norma
+Item_BusinesRisk_ListHeader_StartValue::Resultado
+Item_BusinesRisk_ListHeader_Type::Tipo
+Item_BusinessRisk::Riesgo
+Item_BusinessRisk_Btn_NewIPR::Fijar nuevo IPR
+Item_BusinessRisk_Button_CategoryBAR::Gestión de normas
+Item_BusinessRisk_Button_New::Añadir riesgo
+Item_BusinessRisk_ErrorMesagge_OutOfDate::La fecha debe ser posterior a
+Item_BusinessRisk_ErrorMessage_ClosedRequiredData::Si se cierra, debe indicar si aplica acción o si se asume el riesgo
+Item_BusinessRisk_ErrorMessage_CloseEarlierThanStart::La fecha de cierre no puede ser anterior a la fecha de alta
+Item_BusinessRisk_ErrorMessage_DateCloseRequired::Especificar una fecha de cierre
+Item_BusinessRisk_ErrorMessage_DateStartRequired::Especificar una fecha de alta
+Item_BusinessRisk_ErrorMessage_DateUpToLimit::La fecha no puede ser posterior a la actual
+Item_BusinessRisk_ErrorMessage_FinalProbabilityRequired::Indicar el nivel de probabilidad final
+Item_BusinessRisk_ErrorMessage_FinalSeverityRequired::Indicar el nivel de severidad final
+Item_BusinessRisk_ErrorMessage_InitialValueBadRange::El valor inicial debe estar entre 1 y 25
+Item_BusinessRisk_ErrorMessage_InitialValueRequired::Especificar un valor inicial
+Item_BusinessRisk_ErrorMessage_NameRequired::Especificar un nombre
+Item_BusinessRisk_ErrorMessage_NewProbabiliySeverity_Required::Indicar el nuevo nivel de probabilidad y severidad
+Item_BusinessRisk_ErrorMessage_ProbabilityRequired::Especificar una probabilidad
+Item_BusinessRisk_ErrorMessage_ProcessRequired::Especificar un proceso
+Item_BusinessRisk_ErrorMessage_ResultRequired::Especificar un resultado (probabilidad x severidad)
+Item_BusinessRisk_ErrorMessage_RulesRequired::Especificar una norma
+Item_BusinessRisk_ErrorMessage_SeverityRequired::Especificar una severidad
+Item_BusinessRisk_ErrorMessage_StartNotApply::Una vez evaluado el riesgo, establecer si se realiza una acción o si se asume
+Item_BusinessRisk_Filter_NoData::Este riesgo no tiene costes
+Item_BusinessRisk_Help_CostBlocked::Per porder afegir costos s'ha de desar l'acció
+Item_BusinessRisk_LabelField_ActualResult::Resultado
+Item_BusinessRisk_LabelField_ApplyAction::Aplicar una acción
+Item_BusinessRisk_LabelField_ApplyActionNo::No aplicar una acción
+Item_BusinessRisk_LabelField_Assumed::Asumir el riesgo
+Item_BusinessRisk_LabelField_Causes::Causas
+Item_BusinessRisk_LabelField_CloseDate::Fecha de Cierre
+Item_BusinessRisk_LabelField_Code::Código
+Item_BusinessRisk_LabelField_DateStart::Fecha alta
+Item_BusinessRisk_LabelField_Description::Descripción
+Item_BusinessRisk_LabelField_InitialValue::Valor inicial
+Item_BusinessRisk_LabelField_IPR::IPR
+Item_BusinessRisk_LabelField_Name::Riesgo
+Item_BusinessRisk_LabelField_Notes::Notas
+Item_BusinessRisk_LabelField_Probability::Probabilidad
+Item_BusinessRisk_LabelField_Process::Procesos
+Item_BusinessRisk_LabelField_Remainder::Chuleta
+Item_BusinessRisk_LabelField_Result::Resultado
+Item_BusinessRisk_LabelField_Rules::Normas
+Item_BusinessRisk_LabelField_Severity::Severidad
+Item_BusinessRisk_LabelField_StartControl::Control inicial
+Item_BusinessRisk_List_Filter_From::Desde
+Item_BusinessRisk_List_Filter_From::Hasta
+Item_BusinessRisk_List_Filter_Process::Procesos
+Item_BusinessRisk_List_Filter_Rules::Normas
+Item_BusinessRisk_List_Filter_Type::Tipo
+Item_BusinessRisk_List_Filter_Type_Assumed::Asumido
+Item_BusinessRisk_List_Filter_Type_NotSignificant::No significativo
+Item_BusinessRisk_List_Filter_Type_Significant::Significativo
+Item_BusinessRisk_Message_InsertSucess::Riesgo guardado correctamente. Ya se pueden usar las pestañas del formulario
+Item_BusinessRisk_Message_IPR::Hay # riesgos que pasarán de no-significativos a significativos. ¿Desea continuar?
+Item_BusinessRisk_Message_IPR_2::Hay # riesgos que pasarán de significativos a no-significativos. ¿Desea continuar?
+Item_BusinessRisk_Message_ReevaluteRisk::Evaluar el riesgo después de aplicar una acción
+Item_BusinessRisk_MessageClosingNotAvailable::No se puede dar por resuelto un riesgo mientras la acción continúe abierta
+Item_BusinessRisk_MessageHistoric::Este riesgo tiene un nuevo estado a fecha de #. Para acceder clicar
+Item_BusinessRisk_Popup_Delete_Title::Eliminar análisis de riego
+Item_CalibrationAct_Button_New::Nueva calibración
+Item_CalibrationAct_Warning_DefinitionRequired::Para añadir nuevas calibraciones, grabar una configuración inicial
+Item_CalibrationType_External::Configuración externa
+Item_CalibrationType_Internal::Configuración interna
+Item_Company_Button_CompanyAddressBAR::Gestión de direcciones
+Item_Company_Help_Address::Indicar la dirección, incluye el tipo de vía
+Item_Company_Help_BAR_Addresses::Gestión de direcciones
+Item_Company_Help_City::Indicar la población
+Item_Company_Help_Common_SelectAddress::Seleccionar dirección
+Item_Company_Help_Email::Indicar la dirección de correo electrónico
+Item_Company_Help_Fax::Indicar el número de fax
+Item_Company_Help_Mobile::Indicar el número de móvil
+Item_Company_Help_Name::Nombre de la empresa
+Item_Company_Help_Nif::Indicar el NIF
+Item_Company_Help_Pais::Seleccionar el país
+Item_Company_Help_Phone::Indicar el número de teléfono
+Item_Company_Help_Provincia::Indicar la provincia
+Item_Company_Help_ZipCode::Indicar el código postal
+Item_Company_Logo::Logo
+Item_Company_Tab_Countries::Países
+Item_Company_Tab_DiskQuote::Uso de disco
+Item_Company_Tab_Principal::Datos principales
+Item_Company_Tab_Traces::Trazas
+Item_CompanyAddress_FieldLabel_Address::Dirección
+Item_CompanyAddress_FieldLabel_Cellular::Móvil
+Item_CompanyAddress_FieldLabel_City::Población
+Item_CompanyAddress_FieldLabel_Country::País
+Item_CompanyAddress_FieldLabel_PostalCode::C.P.
+Item_CompanyAddress_FieldLabel_Province::Dirección
+Item_CompanyAddress_FieldLabel_Province::Provincia
+Item_CompanyAddress_FielLabel_Phone::Teléfono
+Item_CompanyAddress_Header_Address::Dirección
+Item_CompanyAddress_PopupDelete_Message::¿Eliminar la dirección?
+Item_CompanyAddress_PopupTile_Add::Añadir dirección
+Item_CompanyAddress_PopupTile_Edit::Editar la dirección
+Item_CompanyAddress_PopupTitle::Seleccionar una dirección principal
+Item_CompanyAddress_ToolTip_SetAsPrincipal::Establecer como principal
+Item_CompanyCountries_Status_Availables::Países disponibles
+Item_CompanyCountries_Status_Selected::Países seleccionados
+Item_CompanyCountry_Button_Discard::Descartar países
+Item_CompanyCountry_Button_Select::Seleccionar países
+Item_CompanyCountry_FieldLabel_Name::Nombre
+Item_CompanyData::Datos Empresa
+Item_CompanyData_Button_ChangeLogo::Cambiar el logo
+Item_CompanyData_Error_Message_PhoneOrCellular::Indicar el teléfono fijo o el móvil
+Item_CompanyData_FieldLabel_Address::Dirección
+Item_CompanyData_FieldLabel_Cellular::Móvil
+Item_CompanyData_FieldLabel_City::Localidad
+Item_CompanyData_FieldLabel_Country::País
+Item_CompanyData_FieldLabel_Email::Correo
+Item_CompanyData_FieldLabel_Fax::Fax
+Item_CompanyData_FieldLabel_Phone::Teléfono
+Item_CompanyData_FieldLabel_PostalAddress::C.P.
+Item_CompanyData_FieldLabel_Province::Provincia
+Item_CompanyData_Popup_ImageDelete_Title::Eliminar la imagen
+Item_CompanyProfile_FieldLabel_Name::Nombre
+Item_CompanyProfile_FieldLabel_Nif::NIF
+Item_User::Usuario/a
+Item_User_ActualPassword::Contraseña actual
+Item_User_Btn_ResetPassword::Regenerar
+Item_User_Button_New::Añadir
+Item_User_ChangePassword::Cambiar la contraseña
+Item_User_ErrorMessage_PaswordsNoMatch::Las contraseñas no coinciden
+Item_User_FieldLabel_PasswordConfirm::Confirmar la contraseña
+Item_User_Help_PrimaryUser::A este usuario no se le pueden modificar los permisos
+Item_User_Help_ResetPassword::Se enviará la nueva contraseña al correo del usuario
+Item_User_List_Header_Email::Correo
+Item_User_List_Header_EmployeeName::Empleado/a
+Item_User_List_Header_Grant::Permiso
+Item_User_List_Header_Read::Lectura
+Item_User_List_Header_UserName::Usuario/a
+Item_User_List_Header_Write::Modificación
+Item_User_Message_AfterChangePassword::Al cambiar la contraseña, se cerrará la sesión para reiniciar con la nueva contraseña
+Item_User_Message_GrantsAvaiable::Se ha activado la pestaña de permisos. Por favor, activa los permisos necesarios para que el usuario pueda utilizar la aplicación.
+Item_User_Message_ResetPassword_Ok::Contraseña regenerada correctamente. Se ha enviado un correo al usuario/a con las instrucciones de acceso a AspadLand.
+Item_User_Message_WelcommeMailSent::Se ha enviado un correo al usuario/a con las instrucciones de acceso a AspadLand.
+Item_User_NewPassword::Nueva contraseña
+Item_User_PopupDelete_Message::¿Eliminar?
+Item_User_Profile_Title_Settings::Configuración
+Item_User_Suicide::Un/a usuario/a no se puede eliminar a si mismo/a
+Item_User_Tab_Grants::Permisos
+Item_User_Tab_Password::Contraseña
+Item_User_Tab_Principal::Datos básicos
+Item_User_Title_Account::Gestión de la cuenta
+Item_User_Title_ResetPassword::Regenerar la contraseña
+Item_Users::Usuarios/as
+Maintenance-Ext::Mantenimiento externo
+Maintenance-Int::Mantenimiento interno
+NumericDecimalSeparator::,
+NumericMilesSeparator::.
+por::por
+Principal::Principal
+Repair-Ext::Reparación externa
+Repair-Int::Reparación interna
+Responsabilidades::Responsabilidades
+Resumen::Resúmen
+semana::semana
+Servicio::Servicio
+SkillsFor::Formación para el/la empleado/a
+Tipo::Tipo
+Verification-Ext::Verificación externa
+Verification-Int::Verificación interna
+MailTemplate_ResetPassword_Subject::Reinicio de contraseña en ISSUS
+MailTemplate_ResetPassword_Error::No se pudo reiniciar la contraseña
+MailTemplate_ResetPassword_DefaultBody::Se ha reestablecido su contraseña en ISSUS.<br />Acceder a la siguiente url http://issus.scrambotika.com/ <br/> User:<b>{0}</b><br/>Password:<b>{1}</b>
+Item_Producto::Producto
+Item_Productos::Productos
+Item_UserProfile_Breacrumb::Datos del centros
+Item_UserProfile_Tab_Password::Contraseña
+Item_UserProfile_Tab_Principal::Datos básicos
+Item_UserProfile_Tab_Horario::Horario
+Item_UserProfile_NameLabel::Nom
+Item_UserProfile_Email1Label::Email principal
+Item_UserProfile_Email2Label::Email alternativo
+Item_UserProfile_AddressLabel::Dirección
+Item_UserProfile_CPLabel::CP
+Item_UserProfile_CityLabel::Población,
+Item_UserProfile_ProvinceLabel::Provincia
+Item_UserProfile_ChangeDataTitle::Cambiar datos del usuario
+Item_UserProfile_ChangeDataButton::Enviar cambios
+Item_UserProfile_HorarioLunesLabel::Lunes
+Item_UserProfile_HorarioMartesLabel::Martes
+Item_UserProfile_HorarioMiercolesLabel::Miércoles
+Item_UserProfile_HorarioJuevesLabel::Jueves
+Item_UserProfile_HorarioviernesLabel::Viernes
+Item_UserProfile_HorarioSabadoLabel::Sábado
+Item_UserProfile_HorarioDomingoLabel::Domingo
+Item_UserProfile_TelefonoLabel::Teléfono
+Item_UserProfile_Telefono2Label::Tel.Urgencias
+Item_UserProfile_UrgenciasPresencial::Urg.Presencial
+Item_UserProfile_UrgenciasTelefono::Urg.Telefóno
+Item_UserProfile_HorarioCompleto::Horario completo
+Item_UserProfile_HorarioManana::Mañana / Completo
+Item_UserProfile_HorarioTarde::Tarde
+Item_UserProfile_HorarioButton::Cambiar horario
+Item_UserProfile_ChangePasswordLogout::Al cambiar la contraseña se tendrá que reiniciar sesión
+Item_UserProfile_ActualPassword::Contraseña actual
+Item_UserProfile_NewPassword::Nueva contraseña
+Item_UserProfile_ConfirmPassword::Confirmar contraseña
+Item_UserProfile_ChangePasswordButton::Cambiar contraseña
+Item_CuadroMedico::Actos clínicos -Los cambios realizados serán efectivos, previa verificación por nuestro cuadro veterinario-
+Item_CuadroMedico_Especialidades::Especialidades
+Item_CuadroMedico_Actos::Actos
+Item_CuadroMedico_ActosDisponibles::Disponibles
+Item_CuadroMedico_ActosOfertados::Ofertados
+Item_CuadroMedico_SendButton::Enviar cambios
+Item_Poliza_Status_Active::Vigente
+Item_Poliza_Status_Inactive::Inactiva
+Item_Mascota_Type_DogMale::Perro
+Item_Mascota_Type_DogFemale::Perra
+Item_Mascota_Type_CatMale::Gato
+Item_Mascota_Type_CatFemale::Gata
+Item_Presupuesto::Presupuesto
+Item_Presupuestos::Presupuestos
+Item_Presupuesto_Header_Product::Producto
+Item_Presupuesto_Header_Amount::Importe
+Item_Presupuesto_Header_Discount::Descuento
+Item_Presupuesto_Header_Act::Acto/tratameinto
+Item_Presupuesto_Header_Especialidad::Especialidad
+Item_Presupuesto_Tab_New::Realizar presupuesto
+Item_Presupuesto_Tab_History::Presupuestos pendientes
+Item_Presupuesto_ActoLabel::Acto/tratamiento
+Item_Presuspuesto_Amount::PVP sin descuento
+Item_Presuspuesto_Notes::Observaciones
+Item_Presupuesto_AddActoPopupTitle::Añadir acto/tratamiento
+Item_Presupuesto_SavedOkMessage::Presupuesto guardado con éxito
+Item_Presupuesto_DiscardOkMessage::El presupuesto ha sido descartado
+Item_Presupuesto_RealizadoOkMessage::El presupuesto ha sido marcado como realizado
+Item_Presupuesto_OwnAmount::Acto no baremado
+Item_Presupuesto_OwnAmount_Plural::Actos no baremados
+Item_Presupuesto_NoActosErrorMessage::Hay que añadir un acto como mínimo
+Item_Presupuesto_NoActosASPADErrorMessage::Hay que añadir un acto baremado con ASPAD como mínimo
+Item_SearchUser::Búsqueda de usuarios
+Item_Validaciones::Validaciones
+Item_Prespuesto::Presupuesto
+Item_Presupuesto_AddObservacionesPopupTitle::Añadir observaciones
+Item_Presupuesto_DiscardPopupTitle::Descartar presupuesto
+Item_Presupuesto_DiscardPopupMessage::¿Está seguro de descartar el presupuesto
+DashBoard_Message::Solicita al asegurado el colectivo al que pertenece y pulse sobre &eacute;l para realizar la b&uacute;squeda
+Item_UserSearch::Búsqueda de usuarios
+Item_Validations::Cola de validaciones
+Item_Dental::Producto dental
+Item_Act::Actos clínicos
+DashBoard_NOASPAD::Contacta con ASPAD para ampliar los colectivos a los que prestas servicio clinicas@aspad.es | 902&nbsp;888&nbsp;808
+ItemBusquedaUsuarioNoCriteria::Es necesario algún criterio de búsqueda
+Item_Profile::Perfil usuario
+Item_Presupuesto_NOASPAD_Message::El acto/tratamiento indicado no existe, por favor, indique su importe, o cancele para buscar otro.
+Common_Error_NIFInvalid::NIF no válido
+Item_Profile_Title_Facturacion::Mail al que remitir las facturas mensuales
+Item_UserProfile_Email::Email facturación
+Item_Profile_Actos_NoNewMessage::No hay nuevos actos
+Item_Profile_Actos_NoRefusedMessage::No hay actos retirados
+Item_Profile_Actos_MailSentMessage::Se han enviado los datos para la confirmación de los cambios solicitados
+Item_Profile_Actos_MailSubject::ASPADLand - Cambio de actos realizados por {0} - {1}
+Item_Profile_Actos_MailTitle::Se ha solicitado a través de ASPADLand un cambio de horarios del centro <strong>{0}</strong>.
+Item_Profile_Horario_MailTitle::Se ha solicitado a través de ASPADLand un cambio en la relación de actos ofertados <strong>{0}</strong>.
+Item_Profile_Horario_MailSubject::ASPADLand - Cambio horarios de {0} - {1}
+Item_CuadroMedico::Actos clínicos
+Item_CuadroMedico_Especialidades::Especialidades
+Item_CuadroMedico_Actos::Actos
+Item_CuadroMedico_ActosDisponibles::Disponibles
+Item_CuadroMedico_ActosOfertados::Ofertados
+Item_CuadroMedico_SendButton::Enviar cambios
+Item_Poliza_Status_Active::Vigente
+Item_Poliza_Status_Inactive::Inactiva
+Item_Mascota_Type_DogMale::Perro
+Item_Mascota_Type_DogFemale::Perra
+Item_Mascota_Type_CatMale::Gato
+Item_Mascota_Type_CatFemale::Gata
+Item_Presupuesto_DiscardPopupTitle::Descartar presupuesto
+Item_Presupuesto_DiscardPopupMessage::¿Está seguro de descartar el presupuesto
+Item_Validaciones::Cola de validación
+Item_Validaciones_Status_Pendiente::Pendiente
+Item_Validaciones_Status_Coincidente::Coincidente
+Item_Validaciones_Status_Aprobada::Aprobada
+Item_Validaciones_Status_Denegada::Denegada
+Item_Validaciones_Plural::Cola de validaciones
+Item_Validaciones_Label_DNI::DNI/NIF
+Item_Validaciones_Label_Colectivo::Colectivo
+Item_Validaciones_Label_Poliza::Nº póliza
+Item_Validaciones_Label_Nombre::Nombre
+Item_Validaciones_Label_Apellido1::Apellido1
+Item_Validaciones_Label_Apellido2::Apellido2
+Item_Validaciones_Label_Urgente::Urgente
+Item_Validaciones_Btn_Send::Solicitar validación
+Item_Validaciones_List_Title::Resultados de la búsqueda
+Item_Validaciones_List_Header_Cola::Nº cola
+Item_Validaciones_List_Header_DNI::DNI/NIF
+Item_Validaciones_List_Header_Colectivo::Colectivo
+Item_Validaciones_List_Header_Urgente::Urg.
+Item_Validaciones_List_Header_Observaciones::Obs.
+Item_Validaciones_List_Header_Dates::Alta / modificación
+Item_Validaciones_List_Header_Asegurado::Asegurado
+Item_Validaciones_List_Header_Telefono::Teléfono
+Item_Validaciones_List_Header_Poliza::Nº póliza
+Item_Presupuesto_Tab_ActosRealizados::Actos realizados
+Item_Presupuesto_Print_Caducity::Es presupuesto tiene una validez de 15 días.
+Item_BusquedaUsuarios::Búsqueda de usuarios
+Item_BusquedaUsuarios::Intro::Búsqueda de usuario para el colectivo
+Item_BusquedaUsuarios_Table_Title::Resultados de la búsqueda
+Item_BusquedaUsuarios_Table_Nombre::Nombre
+Item_BusquedaUsuarios_Table_DNI::NIF/NIE
+Item_BusquedaUsuarios_Table_Producto::Producto
+Item_BusquedaUsuarios_Table_Poliza::Nº póliza
+Item_BusquedaUsuarios_Table_Estado::Estado
+Item_BusquedaUsuarios_Table_Chip::Nº chip
+Item_BusquedaUsuarios_Table_Tipo::Tipo
+Item_BusquedaUsuarios_Table_Mascota::Mascota
+Item_BusquedaUsuarios_CmbColectivoPlaceHolder::Seleccionar colectivo...
+Item_BusquedaUsuarios_MascotaUpdate_Title::Modificar mascota
+Item_Presupuesto_Btn_Print::Imprimir presupuesto
+Item_Presupuesto_Btn_Mark::Marcar como realizado
+Item_Asegurados::Asegurados
+Item_Asegurados_Title::Listado de asegurados atendidos
+Item_Asegurados_List_Header_Asegurado::Asegurado
+Item_Asegurados_List_Header_Poliza::Póliza
+Item_Asegurados_List_Header_Colectivo::Colectivo
+Item_Asegurados_List_Header_Producto::Producto
+Item_Presupuesto_Label_Asegurado::Asegurado
+Item_Presupuesto_Label_Colectivo::Colectivo
+Item_Presupuesto_Label_Mascota::Mascota
+Item_Presupuesto_Label_Chip::Chip
+Item_Presupuesto_Label_TipoMascota::Tipo
+Item_Presupuesto_Label_SexoMascota::Sexo
+Item_Presupuesto_Title_ActosRealizados::Actos realizados
+Item_Presupuesto_Title_Presupuesto::Presupuesto
+Item_Presupuesto_List_ActosRealizados_Header_Especialidad::Especialidad
+Item_Presupuesto_List_ActosRealizados_Header_Acto::Acto
+Item_Presupuesto_List_ActosRealizados_Header_Amount::Importe
+Item_Presupuesto_List_ActosRealizados_Header_Discount::Descuento
+Item_Presupuesto_List_ActosRealizados_Header_Date::Fecha
+Item_Presupuesto_ActoDescuento_Message::Indicar importe del acto
+Item_Presupuesto_ActoDescuento_PopupTitle::Acto con descuento
+Item_Presupuesto_Discount::Descuento
+Item_Presupuesto_Get::Seleccionar
+Item_Documentos::Documentación
+Item_Documentos_Title_General::Documentos del centro
+Item_Documentos_Title_Custom::Documentos privados
+Item_Documentos_Header_Type::Tipo
+Item_Documentos_Header_Name::Nombre
+Item_Sugerencias_TableHeader_Sugerencia::Sugerencia
+Item_Sugerencias_TableHeader_Date::Fecha
+Item_Sugerencias_TableNoData::No se han enviado sugerencias a ASPAD
+Item_Sugerencias::Comunicaciones
+Item_Sugerencias_Tab_Send::Sugerencia
+Item_Sugerencias_Tab_Sent::Envíos a ASPAD
+Item_Sugerencias_Label::Describa su sugerencia
+Item_Sugerencias_Btn_Send::Enviar sugerencia
+Item_Sugerencias_Explanation:: Envío de Sugerencias
+Item_Sugerencias_MailSentMessage::La sugerencia ha sido enviada
+Item_ProductoDental_Tab_Basic::Clínicas dentales
+Item_ProductoDental_Tab_Servicio::Beneficiarios de servicio dental
+Item_ProductoDental_Table_Nombre::Nombre
+Item_ProductoDental_Table_NIF::NIF
+Item_ProductoDental_Intro1::Bienvenidos a ADE Veterinarios, el servicio de cobertura dental que ASPAD pone a disposición de todo el personal de tu centro veterinario.
+Item_ProductoDental_Intro2::Podrás consultar aquí los centros próximos a tu domicilio y la tarifa especial de la que puedes beneficiarte <a href="./Documentos/TARIFAS ADE VETERINARIOS 2018.pdf" target="_blank">(ver tarifa)</a>.
+Item_ProductoDental_Intro3::Para dar de alta o baja a cualquier miembro de su personal en este servicio debe contactar directamente con <strong>ASPAD</strong> mediante email a <a href="mailto:clinicas@aspad.es">clinicas@aspad.es</a> o llamar al <strong>902 888 808 / 93 492 79 13 / 91 787 87 88</strong>.
+Item_ProductoDental_Intro4::Si tienes dudas sobre la tarifa o la operativa del servicio, puedes llamar al <strong>902 116 403</strong>.
+Item_ProductoDental_NoAsegurados::No hay beneficiarios de producto dental
+Presupuesto_Btn_MarcarRealizado::Marcar como realizado
+Presupuesto_Popup_Date::Indicar fecha de realización
+PDF_Albaran::Nº albarán
+PDF_Fecha::Fecha
+PDF_Poliza::Póliza
+PDF_Total::TOTAL
+PDF_Especialidad::Expecialidad
+PDF_Concepto::Concepto
+PDF_Cantidad::Cantidad
+PDF_Base::Base
+PDF_Dto::Dto.
+PDF_Importe::Importe
+PDF_Actospropios::No baremados
+PDF_IVA::I.V.A.
+PDF_IGIC::I.G.I.C.
+PDF_Ceuta::I.P.S.I.
+PDF_Melilla::I.P.S.I.
+Admin_Dashboard::Panel de control
+Admin_Configuration::Configuración
+Admin_Searchs::Búsquedas
+Admin_Traces::Trazas
+Admin_Validations::Validaciones
+Admin_Presupuestos::Presupuestos
+Admin_Mail::Mails
+Admin_Login::Acessos
+Admin_Login_Tab_LastWeek::Última semana
+Admin_Login_Tab_LastMonth::Último mes
+Admin_Login_Tab_Never::Nunca
+Admin_Login_Header_CentroName::Centro
+Admin_Login_Header_LastConnection::Último acceso
+Admin_Config_Tab_Configruration::Datos básicos
+Admin_Config_Tab_Repeat::Actos duplicables
+Admin_Config_Repeat_Message::Son aquellos actos baremados que se permite que estén repetidos en un mismo presupuesto.
+Admin_Config_Repeat_Available::Disponibles
+Admin_Config_Repeat_Selected::Seleccionados
+Item_Beneficios::Beneficios
+Item_Beneficios_Title::Beneficios
+Item_Beneficios_Message:: 
+Item_Beneficios_ProductoDental_Title::Producto dental
+Item_Beneficios_ProductoDental_Message:: 
+Admin_Validacion_Codigo::Código
+Admin_Validacion_DNI::DNI
+Admin_Validacion_Nombre::Nombre
+Admin_Validacion_Centro::Centro
+Admin_Validacion_Fecha::Fecha
+Admin_Validacion_Poliza::Póliza
+Admin_Validacion_Urgent::Urg.
+Admin_Traces::Trazas
+Admin_Traces_Event::Evento
+Admin_Traces_Centro::Centro
+Admin_Traces_Date::Fecha
+Admin_Traces_Data::Datos
+Admin_Presupuesto_Tab_Resumen::Resumen
+Admin_Presupuesto_Tab_Pendientes::Pendientes
+Admin_Presupuesto_Title_Pendientes::Presupuestos generados sin registrar en CRM
+Admin_Presupuesto_Title_Realizados::Presupuestos realizados con actos registrados en CRM
+Admin_Presupuesto_Header_Centro::Centro
+Admin_Presupuesto_Header_Codigo::Presupuesto
+Admin_Presupuesto_Header_Fecha::Fecha
+Admin_Presupuesto_Header_Poliza::Póliza
+Admin_Presupuesto_Header_Mascota::Mascota
+Admin_Config_Impuestos::Impuestos
+Admin_Config_Impuestos_IVA::I.V.A.
+Admin_Config_Impuestos_IGIC::I.G.I.C.
+Admin_Config_Impuestos_Ceuta::Ceuta
+Admin_Config_Impuestos_Melilla::Melilla
+Admin_Config_Periodo::Periodos
+Admin_Config_Periodo_Validaciones::Vista validaciones
+Admin_Config_Periodo_Presupuestos::Validez presupuesto
+Item_CuadroMedico_ChangeDataTitle::Confirmación de cambios solicitados
+Item_CuadroMedico_ChangeDataMessage::ASPAD se podrá en contacto al teléfono # para cofirmar los cambios del cuadro médico ofertado
+Common_Warning_Profile::Para un funcionamiento más efectivo y una comunicación más fluida, es conveniente informar de los datos del centro en su perfil.
+Admin_PresupuestosPendientes::Presupuestos pendientes
+Admin_BusquedaSinPresupuesto::Búsquedas sin presupuesto
+Admin_PresupuestosDescartados::Presupuestos descartados
+Admin_Traces_Presupuesto::Presupuesto
+Admin_Traces_Colectivo::Colectivo
+Admin_Traces_PolizaDNI::Póliza - DNI
+Admin_Presupuesto_Tab_Realizados::Presupuestos realizados

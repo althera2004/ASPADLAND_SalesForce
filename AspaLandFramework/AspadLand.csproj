@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C05BF57E-B756-4D71-A669-5E0261CD1697}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ShortcutFramework</RootNamespace>
+    <AssemblyName>ShortcutFramework</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>ExtendedDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>bin\Debug\ShortcutFramework.xml</DocumentationFile>
+    <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="crmsvcutil, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrmSvcUtil.2011.5.0.18\lib\net40\crmsvcutil.exe</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.10.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.10\lib\itextsharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Crm.Sdk.Proxy, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CRM2011ClientBase.1.0.3.0\lib\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
+    </Reference>
+    <Reference Include="microsoft.xrm.client, Version=5.0.9689.2166, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Xrm.Client.2011.5.0.18\lib\net40\microsoft.xrm.client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xrm.Sdk, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CRM2011ClientBase.1.0.3.0\lib\Microsoft.Xrm.Sdk.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.4.1\lib\net40\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.4.1\lib\net40\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.4.1\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.4.1\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Alerts\AlertDefinition.cs" />
+    <Compile Include="Alerts\FieldPosition.cs" />
+    <Compile Include="ApplicationGrant.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="ApplicationItem.cs" />
+    <Compile Include="DifferenciableAttribute.cs" />
+    <Compile Include="Helper\CRMConnectionManager.cs" />
+    <Compile Include="Helper\CRMConnectionSetting.cs" />
+    <Compile Include="Item\Acto.cs" />
+    <Compile Include="Item\BaseItem.cs" />
+    <Compile Include="Item\Binding\ColumnsCompanyGetDocuments.cs" />
+    <Compile Include="Item\Binding\ColumnsCompanyGetEmployees.cs" />
+    <Compile Include="Item\Binding\ColumnsCostDefinitionGet.cs" />
+    <Compile Include="Item\Binding\ColumnsCustomerGetBy.cs" />
+    <Compile Include="Item\Binding\ColumnsCustomerGetByCompany.cs" />
+    <Compile Include="Item\Binding\ColumnsCustomerIncidentActionGet.cs" />
+    <Compile Include="Item\Binding\ColumnsDepartmentGetById.cs" />
+    <Compile Include="Item\Binding\ColumnsDocumentAttachGet.cs" />
+    <Compile Include="Item\Binding\ColumnsDocumentGetById.cs" />
+    <Compile Include="Item\Binding\ColumnsDocumentsLastModified.cs" />
+    <Compile Include="Item\Binding\ColumnsEmployeeGetByCompany.cs" />
+    <Compile Include="Item\Binding\ColumnsGetLogin.cs" />
+    <Compile Include="Item\Binding\ColumnsGetSkillByEmployee.cs" />
+    <Compile Include="Item\Binding\ColumnsScheduleTaskGetByEmployee.cs" />
+    <Compile Include="Item\Binding\ColumnsUploadFileGet.cs" />
+    <Compile Include="Item\Binding\ColumnsUserGetByCompanyId.cs" />
+    <Compile Include="Item\Binding\ColumnsValidacionesGet.cs" />
+    <Compile Include="Item\Colectivo.cs" />
+    <Compile Include="Item\Company.cs" />
+    <Compile Include="Item\CompanyAddress.cs" />
+    <Compile Include="Item\DocumentosCentro.cs" />
+    <Compile Include="Item\MailTrace.cs" />
+    <Compile Include="Item\Mascota.cs" />
+    <Compile Include="Item\Producto.cs" />
+    <Compile Include="Item\Traza.cs" />
+    <Compile Include="Item\UploadFile.cs" />
+    <Compile Include="Item\Validaciones.cs" />
+    <Compile Include="LogOn\ApplicationLogOn.cs" />
+    <Compile Include="LogOn\LogOnObject.cs" />
+    <Compile Include="RandomPassword.cs" />
+    <Compile Include="SforceService.cs" />
+    <Compile Include="ToolsPdf.cs" />
+    <Compile Include="UserGrant.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="ApplicationUser.cs" />
+    <Compile Include="CompanyCreate.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="ApplicationDictionary.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools.cs" />
+    <Compile Include="UserInterface\BreadCrumbItem.cs" />
+    <Compile Include="UserInterface\LeftMenuOption.cs" />
+    <Compile Include="UserInterface\MenuOption.cs" />
+    <Compile Include="UserInterface\MenuShortcut.cs" />
+    <Compile Include="UserInterface\Shortcut.cs" />
+    <Compile Include="Variance.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SbrinnaFramework\SbrinnaFramework.csproj">
+      <Project>{acadb79e-9811-43f5-b82c-b15bd44bf93b}</Project>
+      <Name>SbrinnaFramework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
