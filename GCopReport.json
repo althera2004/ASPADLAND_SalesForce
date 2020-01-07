@@ -1,0 +1,32 @@
+{
+  "Items": [
+    {
+      "Analyzer": "LongMethodAnalyzer",
+      "OccurrenceCount": 1,
+      "Exceptions": null,
+      "SentToServer": true,
+      "InstallationName": "SERVER_GISO"
+    },
+    {
+      "Analyzer": "ConstantVariableAnalyzer",
+      "OccurrenceCount": 16,
+      "Exceptions": null,
+      "SentToServer": true,
+      "InstallationName": "SERVER_GISO"
+    },
+    {
+      "Analyzer": "UnusedMethodsAnalyzer",
+      "OccurrenceCount": 1428,
+      "Exceptions": null,
+      "SentToServer": true,
+      "InstallationName": "SERVER_GISO"
+    },
+    {
+      "Analyzer": "AvoidHardCodeEmailAddresss",
+      "OccurrenceCount": 3,
+      "Exceptions": null,
+      "SentToServer": true,
+      "InstallationName": "SERVER_GISO"
+    }
+  ]
+}
