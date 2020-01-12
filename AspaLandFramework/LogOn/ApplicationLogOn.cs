@@ -13,9 +13,9 @@ namespace AspadLandFramework.LogOn
     using System.Globalization;
     using System.Linq;
     using System.Web;
+    using AspadLandFramework.Item;
     using SbrinnaCoreFramework.Activity;
     using SbrinnaCoreFramework.DataAccess;
-    using AspadLandFramework.Item;
 
     /// <summary>Implements ApplicationLogOn class</summary>
     public static class ApplicationLogOn
@@ -47,9 +47,9 @@ namespace AspadLandFramework.LogOn
 
         /// <summary>Trace a log on failed</summary>
         /// <param name="userId">Identifier of user that attemps to log on</param>
-        public static void LogOnFailed(Guid userId)
+        public static void LogOnFailed(string userId)
         {
-            /*using (SqlCommand cmd = new SqlCommand("LogonFailed"))
+            using (var cmd = new SqlCommand("LogonFailed"))
             {
                 cmd.Connection = new SqlConnection(ConfigurationManager.ConnectionStrings["cns"].ConnectionString);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -68,7 +68,7 @@ namespace AspadLandFramework.LogOn
                         cmd.Connection.Close();
                     }
                 }
-            }*/
+            }
         }
 
         /// <summary>Log on application</summary>
@@ -138,128 +138,22 @@ namespace AspadLandFramework.LogOn
             if (!login)
             {
                 result.Result = LogOnResult.Fail;
-            }
-            
-            /*using(var cmdAdmin = new SqlCommand("ASPADLand_Admin_Login"))
-            {
-                using (var cnnAdmin = new SqlConnection(ConfigurationManager.ConnectionStrings["cns"].ConnectionString))
-                {
-                    cmdAdmin.Connection = cnnAdmin;
-                    cmdAdmin.CommandType = CommandType.StoredProcedure;
-                    cmdAdmin.Parameters.Add(DataParameter.Input("@UserName", email, 50));
-                    cmdAdmin.Parameters.Add(DataParameter.Input("@Password", password, 50));
-                    try
-                    {
-                        cmdAdmin.Connection.Open();
-                        using (var rdrAdmin = cmdAdmin.ExecuteReader())
-                        {
-                            if (rdrAdmin.HasRows)
-                            {
-                                result.Result = LogOnResult.Admin;
-                            }
-                        }
-                    }
-                    finally
-                    {
-                        if(cmdAdmin.Connection.State != ConnectionState.Closed)
-                        {
-                            cmdAdmin.Connection.Close();
-                        }
-                    }
-                }
+                // weke: LogOnFailed(result.Id);
             }
 
-            if (result.Result != LogOnResult.NoUser)
-            {
-                res.SetSuccess(result);
-                return res;
-            }
+            // weke: TraceLogin(result, email, clientAddress);
+            res.SetSuccess(result);
+            return res;
+        }
 
-            var query = string.Format(
-                CultureInfo.InvariantCulture,
-                "SELECT accountid, qes_user, qes_contrasenya, ISNULL(qes_resetpassword,0) FROM account where qes_user = '{0}' AND qes_contrasenya = '{1}'",
-                email,
-                password);
-            using (var cmd = new SqlCommand(query))
-            {
-                using (var cnn = new SqlConnection(ConfigurationManager.ConnectionStrings["cns"].ConnectionString))
-                {
-                    cmd.Connection = cnn;
-                    try
-                    {
-                        cmd.CommandType = CommandType.Text;
-                        cmd.Connection.Open();
-                        using (var rdr = cmd.ExecuteReader())
-                        {
-                            bool multiCompany = false;
-                            if (rdr.HasRows)
-                            {
-                                while (rdr.Read())
-                                {
-                                    result.Id = rdr.GetGuid(0);
-                                    result.UserName = email;
-                                    result.MustResetPassword = rdr.GetBoolean(3);
-                                    result.Result = LogOnResult.Ok;
-
-                                    if (result.Result == LogOnResult.Fail)
-                                    {
-                                        LogOnFailed(result.Id);
-                                    }
-                                    else
-                                    {
-                                        HttpContext.Current.Session["User"] = ApplicationUser.GetById(rdr.GetGuid(0));
-                                        HttpContext.Current.Session["Actos"] = Acto.ByCentro(rdr.GetGuid(0));
-                                        var productos = Producto.ByCentro(rdr.GetGuid(0));
-                                        HttpContext.Current.Session["Productos"] = productos;
-                                        var colectivos = Colectivo.All.ToList();
-                                        colectivos = colectivos.Where(c => productos.Any(p => p.Id == c.ProductoId)).ToList();
-                                        HttpContext.Current.Session["Colectivos"] = colectivos;
-                                    }
-
-                                    result.MultipleCompany = multiCompany;
-                                    multiCompany = true;
-                                }
-                            }
-                            else
-                            {
-                                result.Result = LogOnResult.NoUser;
-                            }
-                        }
-                    }
-                    catch (SqlException ex)
-                    {
-                        result.Result = LogOnResult.Fail;
-                        result.Id = Guid.Empty;
-                        result.UserName = ex.Message;
-                    }
-                    catch (FormatException ex)
-                    {
-                        result.Result = LogOnResult.Fail;
-                        result.Id = Guid.Empty;
-                        result.UserName = ex.Message;
-                    }
-                    catch (NullReferenceException ex)
-                    {
-                        result.Result = LogOnResult.Fail;
-                        result.Id = Guid.Empty;
-                        result.UserName = ex.Message;
-                    }
-                    finally
-                    {
-                        if (cmd.Connection.State != ConnectionState.Closed)
-                        {
-                            cmd.Connection.Close();
-                        }
-                    }
-                }
-            }
-
+        private static void TraceLogin(LogOnObject result, string email, string clientAddress)
+        {
             /* CREATE PROCEDURE AspadLand_Trace_Insert
              *   @CentroId uniqueidentifier,
              *   @Type int,
              *   @Busqueda nvarchar(50),
              *   @ColectivoId uniqueidentifier,
-             *   @PresupuestoId uniqueidentifier *
+             *   @PresupuestoId uniqueidentifier */
             using (var cmdT = new SqlCommand("AspadLand_Trace_Insert"))
             {
                 using (var cnnT = new SqlConnection(ConfigurationManager.ConnectionStrings["cns"].ConnectionString))
@@ -267,7 +161,7 @@ namespace AspadLandFramework.LogOn
                     cmdT.Connection = cnnT;
                     cmdT.CommandType = CommandType.StoredProcedure;
                     cmdT.Parameters.Add(DataParameter.Input("@CentroId", result.Id));
-                    cmdT.Parameters.Add(DataParameter.Input("@Type", result.Id == Guid.Empty ? 8 : 7));
+                    cmdT.Parameters.Add(DataParameter.Input("@Type", result.Id == string.Empty ? 8 : 7));
                     cmdT.Parameters.Add(DataParameter.Input("@Busqueda", email));
                     cmdT.Parameters.Add(DataParameter.InputNull("@ColectivoId"));
                     cmdT.Parameters.Add(DataParameter.InputNull("@PresupuestoId"));
@@ -289,10 +183,7 @@ namespace AspadLandFramework.LogOn
             if (string.IsNullOrEmpty(clientAddress))
             {
                 clientAddress = "no-ip";
-            }*/
-
-            res.SetSuccess(result);
-            return res;
+            }
         }
 
         /// <summary>Insert into data base a trace of log on action</summary>

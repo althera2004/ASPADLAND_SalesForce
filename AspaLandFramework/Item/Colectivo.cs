@@ -75,15 +75,18 @@
                 foreach (var result in colectivos.records)
                 {
                     var record = result as Producto_ASPAD__c;
-                    var colectivo = new Colectivo
+                    if (record.Nombre_Compa_ia__c != null)
                     {
-                         Id = record.Id,
-                         Description = record.Nombre_Compa_ia__c
-                    };
+                        var colectivo = new Colectivo
+                        {
+                            Id = record.Id,
+                            Description = record.Nombre_Compa_ia__c
+                        };
 
-                    if (!res.Any(c => c.Description.Equals(colectivo.Description, StringComparison.OrdinalIgnoreCase)))
-                    {
-                        res.Add(colectivo);
+                        if (!res.Any(c => c.Description.Equals(colectivo.Description, StringComparison.OrdinalIgnoreCase)))
+                        {
+                            res.Add(colectivo);
+                        }
                     }
                 }
 

@@ -49,41 +49,103 @@
                 centro = this.Session["User"] as ApplicationUser;
             }
 
-            /* CREATE PROCEDURE AspadLand_Trace_Insert
-                *   @CentroId uniqueidentifier,
-                *   @Type int,
-                *   @Busqueda nvarchar(50),
-                *   @ColectivoId uniqueidentifier,
-                *   @PresupuestoId uniqueidentifier */
-            using (var cmdT = new SqlCommand("AspadLand_Trace_Insert"))
-            {
-                using (var cnnT = new SqlConnection(ConfigurationManager.ConnectionStrings["cns"].ConnectionString))
-                {
-                    cmdT.Connection = cnnT;
-                    cmdT.CommandType = CommandType.StoredProcedure;
-                    cmdT.Parameters.Add(DataParameter.Input("@CentroId", centro.Id));
-                    cmdT.Parameters.Add(DataParameter.Input("@Type", 9));
-                    cmdT.Parameters.Add(DataParameter.Input("@Busqueda", poliza + nif));
-                    cmdT.Parameters.Add(DataParameter.Input("@ColectivoId", colectivo));
-                    cmdT.Parameters.Add(DataParameter.InputNull("@PresupuestoId"));
-                    try
-                    {
-                        cmdT.Connection.Open();
-                        cmdT.ExecuteNonQuery();
-                    }
-                    finally
-                    {
-                        if (cmdT.Connection.State != System.Data.ConnectionState.Closed)
-                        {
-                            cmdT.Connection.Close();
-                        }
-                    }
-                }
-            }
+            //weke
+            ///* CREATE PROCEDURE AspadLand_Trace_Insert
+            //    *   @CentroId uniqueidentifier,
+            //    *   @Type int,
+            //    *   @Busqueda nvarchar(50),
+            //    *   @ColectivoId uniqueidentifier,
+            //    *   @PresupuestoId uniqueidentifier */
+            //using (var cmdT = new SqlCommand("AspadLand_Trace_Insert"))
+            //{
+            //    using (var cnnT = new SqlConnection(ConfigurationManager.ConnectionStrings["cns"].ConnectionString))
+            //    {
+            //        cmdT.Connection = cnnT;
+            //        cmdT.CommandType = CommandType.StoredProcedure;
+            //        cmdT.Parameters.Add(DataParameter.Input("@CentroId", centro.Id));
+            //        cmdT.Parameters.Add(DataParameter.Input("@Type", 9));
+            //        cmdT.Parameters.Add(DataParameter.Input("@Busqueda", poliza + nif));
+            //        cmdT.Parameters.Add(DataParameter.Input("@ColectivoId", colectivo));
+            //        cmdT.Parameters.Add(DataParameter.InputNull("@PresupuestoId"));
+            //        try
+            //        {
+            //            cmdT.Connection.Open();
+            //            cmdT.ExecuteNonQuery();
+            //        }
+            //        finally
+            //        {
+            //            if (cmdT.Connection.State != System.Data.ConnectionState.Closed)
+            //            {
+            //                cmdT.Connection.Close();
+            //            }
+            //        }
+            //    }
+            //}
 
             var dictionary = HttpContext.Current.Session["Dictionary"] as Dictionary<string, string>;
             var res = new StringBuilder("[");
+
             var query = @"
+                    SELECT 
+                    Name,
+                    (SELECT 
+	                    Asegurado__r.Name,
+	                    Asegurado__r.NIF__pc,
+	                    Asegurado__r.Producto_ASPAD__r.name 
+                    FROM Agrupaci_nAsegPoliza__r),
+                    (SELECT Mascota__r.Name,
+	                    Mascota__r.N_de_microchip__c,
+	                    Mascota__r.Sexo__c,
+	                    Mascota__r.Tipo_de_mascota__c 
+                    FROM Relaci_n_Mascotas_P_lizas__r)
+                    FROM P_liza__c 
+                    WHERE Id IN (
+		                    SELECT P_liza__c FROM Agrupaci_nAsegPoliza__c
+		                    WHERE 
+		                    Asegurado__r.NIF__pc = '94178107F')
+                    AND	Producto_ASPAD__r.Nombre_Compa_ia__c = 'CASER'";
+            var datos = AspadLandFramework.Tools.SalesForcceQuery(query);
+            var first = true;
+            foreach (var result in datos.records)
+            {
+                var record = result as P_liza__c;
+                if (first)
+                {
+                    first = false;
+                }
+                else
+                {
+                    res.Append(",");
+                }
+
+                var asegurado = record.Agrupaci_nAsegPoliza__r.records.First() as AspadLandFramework.Account;
+                var mascota = record.Relaci_n_Mascotas_P_lizas__r.records.First() as Mascota__c;
+
+                res.AppendFormat(
+                        CultureInfo.InvariantCulture,
+                        @"{{
+                                ""Asegurado"":""{0}"",
+                                ""DNI"":""{1}"",
+                                ""Producto"":""{2}"",
+                                ""Poliza"":""{3}"",
+                                ""Chip"":""{4}"",
+                                ""Nombre"":""{5}"",
+                                ""Mascota"":""{6}"",
+                                ""Estado"":""{7}"",
+                                ""Animal"":""{8}"",
+                                ""MascotaId"":""{9}""}}",
+                                SbrinnaCoreFramework.Tools.JsonCompliant(asegurado.Name),
+                                asegurado.NIF__c.ToUpperInvariant().Trim(),
+                                asegurado.Producto_ASPAD__c.Trim(),
+                                record.Name.Trim(),
+                                mascota.N_de_microchip__c,
+                                mascota.Name,
+                                mascota.Sexo__c,
+                                1,
+                                mascota.Tipo_de_mascota__c,
+                                mascota.Id);
+            }
+            /*var query = @"
             SELECT     
 	            P.qes_AseguradoIdName AS FullName,
 	            P.qes_dni, 
@@ -223,7 +285,7 @@
                         }
                     }
                 }
-            }
+            }*/
 
             res.Append("]");
             return res.ToString();
