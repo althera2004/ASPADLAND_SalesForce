@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -38,7 +39,7 @@ public partial class AseguradosList : Page
     {
         get
         {
-            return Colectivo.JsonList(Colectivo.All);
+            return Session["ColectivosASPADJson"] as string;
         }
     }
 

@@ -100,7 +100,15 @@ public partial class UserProfileView : Page
     {        
         this.user = Session["User"] as ApplicationUser;
         this.company = Session["company"] as Company;
-        this.user = ApplicationUser.GetById(this.user.Id);
+        //this.user = ApplicationUser.GetById(this.user.Id);
+
+        if (user.HorarioLunes == null) { user.HorarioLunes = string.Empty; }
+        if (user.HorarioMartes == null) { user.HorarioMartes = string.Empty; }
+        if (user.HorarioMiercoles == null) { user.HorarioMiercoles = string.Empty; }
+        if (user.HorarioJueves == null) { user.HorarioJueves = string.Empty; }
+        if (user.HorarioViernes == null) { user.HorarioViernes = string.Empty; }
+        if (user.HorarioSabado == null) { user.HorarioSabado = string.Empty; }
+        if (user.HorarioDomingo == null) { user.HorarioDomingo = string.Empty; }
 
         if (!user.HorarioLunes.Contains("-")) { this.user.HorarioLunes += "-"; }
         if (!user.HorarioMartes.Contains("-")) { this.user.HorarioMartes += "-"; }

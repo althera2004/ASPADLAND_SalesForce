@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using AspadLandFramework.Item;
-using System.Reflection;
+using System.Collections.ObjectModel;
 using System.Configuration;
-using System.IO;
-using System.Globalization;
-using SbrinnaCoreFramework.DAL;
 using System.Net;
+using System.Web.UI;
 using AspadLandFramework;
+using AspadLandFramework.Item;
+using SbrinnaCoreFramework.Activity;
 
 public partial class _Default : Page
 {
@@ -64,7 +58,8 @@ public partial class _Default : Page
 
         ServicePointManager.Expect100Continue = true;
         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls12;
-        SforceService binding = new SforceService();
+        var url = ConfigurationManager.AppSettings["SalesForceUrl"].ToString();
+        SforceService binding = new SforceService(url);
         try
         {
             var user = ConfigurationManager.AppSettings["SalesForceUser"].ToString();
@@ -82,10 +77,14 @@ public partial class _Default : Page
         }
         catch (Exception ex)
         {
+            ExceptionManager.Trace(ex, "Salesforce login");
         }
 
         this.ip = this.GetUserIP();
-        //Session["ColectivosASPAD"] = Colectivo.AllASPAD;
+        Session["ColectivosASPAD"] = Colectivo.AllASPAD;
+        Session["ColectivosASPADJson"] = Colectivo.JsonList(Session["ColectivosASPAD"] as ReadOnlyCollection<Colectivo>);
+        Session["ProductosASPAD"] = Producto.AllASPAD;
+        Session["PreciosASPAD"] = AspadLandFramework.Item.Acto.AllASPAD;
     }
 
     private string GetUserIP()

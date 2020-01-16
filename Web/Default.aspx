@@ -5,7 +5,6 @@
 <head>
     <meta charset="utf-8" />
     <title>ASPAND Land</title>
-    <link rel="icon" href="/favicon.ico?v=2" type="image/x-icon" />
     <!--[if !IE]> -->
     <script type="text/javascript" src="assets/js/jquery-2.0.3.min.js"></script>
     <!-- <![endif]-->

@@ -183,10 +183,9 @@ function FillComboTipo() {
 }
 
 function Search() {
-	$("#ErrorMessage").html("");
+    $("#ErrorMessage").html("");
     var nif = $("#TxtDNI").val();
     var poliza = $("#TxtPoliza").val();
-    var colectivo = $("#CmbColectivo").val();
 
     if (nif === "" && poliza === "") {
         $("#ErrorMessage").html("<i class=\"fas fa-exclamation-triangle\"></i>&nbsp;" + Dictionary.ItemBusquedaUsuarioNoCriteria);
@@ -197,12 +196,11 @@ function Search() {
     $("#BtnSearch").attr("disabled", "disabled");
 
     var data =
-        {
-            "nif": nif,
-            "poliza": poliza,
-            "nombre": "",
-            "colectivo": colectivo
-        };
+    {
+        "nif": nif,
+        "poliza": poliza,
+        "colectivo": colectivoId
+    };
 
     console.log("data", data);
 
@@ -232,7 +230,7 @@ function Search() {
                 }
             }
         },
-        "error": function (msg, text) {
+        "error": function (msg) {
             console.log(msg);
             $("#BtnSearch").html("<i class=\"fas fa--search bigger-110\"></i>&nbsp;" + Dictionary.Common_Search);
             $("#BtnSearch").removeAttr("disabled");
@@ -244,52 +242,52 @@ function Search() {
 
 function RenderRow(data) {
     var tr = document.createElement("TR");
-    tr.id = data.MascotaId;
+    tr.id = data.MascotaId + "|" + data.PolizaId + "|" + data.Colectivo;
 
     var tdAsegurado = document.createElement("TD");
     tdAsegurado.appendChild(document.createTextNode(data.Asegurado));
-    tdAsegurado.onclick = function () { GoPresupuesto(this.parentNode.id); }
+    tdAsegurado.onclick = function () { GoPresupuesto(this.parentNode.id); };
 
     var tdDNI = document.createElement("TD");
     tdDNI.appendChild(document.createTextNode(data.DNI));
-    tdDNI.onclick = function () { GoPresupuesto(this.parentNode.id); }
+    tdDNI.onclick = function () { GoPresupuesto(this.parentNode.id); };
 
     var tdProducto = document.createElement("TD");
     tdProducto.appendChild(document.createTextNode(data.Producto));
-    tdProducto.onclick = function () { GoPresupuesto(this.parentNode.id); }
+    tdProducto.onclick = function () { GoPresupuesto(this.parentNode.id); };
 
     var tdPoliza = document.createElement("TD");
     tdPoliza.appendChild(document.createTextNode(data.Poliza));
-    tdPoliza.onclick = function () { GoPresupuesto(this.parentNode.id); }
+    tdPoliza.onclick = function () { GoPresupuesto(this.parentNode.id); };
 
     var tdEstado = document.createElement("TD");
     tdEstado.align = "center";
     tdEstado.appendChild(document.createTextNode(data.Estado));
-    tdEstado.onclick = function () { GoPresupuesto(this.parentNode.id); }
+    tdEstado.onclick = function () { GoPresupuesto(this.parentNode.id); };
 
     var tdNombre = document.createElement("TD");
     tdNombre.appendChild(document.createTextNode(data.Nombre));
-    tdNombre.onclick = function () { GoPresupuesto(this.parentNode.id); }
+    tdNombre.onclick = function () { GoPresupuesto(this.parentNode.id); };
 
     var tdChip = document.createElement("TD");
     tdChip.appendChild(document.createTextNode(data.Chip));
-    tdChip.onclick = function () { GoPresupuesto(this.parentNode.id); }
+    tdChip.onclick = function () { GoPresupuesto(this.parentNode.id); };
 
     var tdAnimal = document.createElement("TD");
     tdAnimal.align = "center";
     tdAnimal.appendChild(document.createTextNode(data.Animal));
-    tdAnimal.onclick = function () { GoPresupuesto(this.parentNode.id); }
+    tdAnimal.onclick = function () { GoPresupuesto(this.parentNode.id); };
 
     var tdMascota = document.createElement("TD");
-    tdMascota.appendChild(document.createTextNode(data.Mascota));
-    tdMascota.onclick = function () { GoPresupuesto(this.parentNode.id); }
+    tdMascota.appendChild(document.createTextNode(data.Nombre));
+    tdMascota.onclick = function () { GoPresupuesto(this.parentNode.id); };
 
     var tdActions = document.createElement("TD");
     var btnUpdate = document.createElement("SPAN");
-    btnUpdate.id = data.MascotaId;
+    btnUpdate.id = data.MascotaId + "|" + data.PolizaId + "|" + data.Colectivo;;
     btnUpdate.title = "Actualizar " + data.Nombre;
     btnUpdate.className = "btn btn-xs btn-info2";
-    btnUpdate.onclick = function () { MascotaUpdate(this.id); }
+    btnUpdate.onclick = function () { MascotaUpdate(this.id); };
     var iconUpdate = document.createElement("I");
     iconUpdate.className = "fas fa-pencil-alt bigger-120";
     iconUpdate.style.color = "#489e2a";
@@ -299,10 +297,10 @@ function RenderRow(data) {
     tdActions.appendChild(document.createTextNode(" "));
 
     var btnAdd = document.createElement("SPAN");
-    btnAdd.id = data.MascotaId;
+    btnAdd.id = data.MascotaId + "|" + data.PolizaId + "|" + data.Colectivo;
     btnAdd.title = "Crear presupuesto";
     btnAdd.className = "btn btn-xs btn-info2";
-    btnAdd.onclick = function () { GoPresupuesto(this.id); }
+    btnAdd.onclick = function () { GoPresupuesto(this.id); };
     var iconAdd = document.createElement("I");
     iconAdd.className = "fas fa-calculator bigger-120";
     iconAdd.style.color = "#489e2a";
@@ -458,7 +456,11 @@ function GetMascotaMyId(mascotaId) {
 }
 
 function GoPresupuesto(id) {
-    var query = ac + "&mascotaId=" + id;
+    var mascotaId = id.split('|')[0];
+    var polizaId = id.split('|')[1];
+    var colectivoId = id.split('|')[2];
+
+    var query = ac + "&mascotaId=" + mascotaId + "&polizaId=" + polizaId + "&colectivo=" + colectivoId + "&tarifaId=" + tarifaId;
     query = $.base64.encode(query);
     document.location = "/Presupuestos.aspx?" + query;
 }

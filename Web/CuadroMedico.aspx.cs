@@ -41,7 +41,7 @@ public partial class CuadroMedico : Page
     {
         get
         {
-            return Colectivo.JsonList(Colectivo.All);
+            return Session["ColectivosASPADJson"] as string;
         }
     }
 
@@ -96,7 +96,8 @@ public partial class CuadroMedico : Page
     {
         var res = new StringBuilder();
         var json = new StringBuilder("[");
-        var actos = this.Session["Actos"] as ReadOnlyCollection<Acto>;
+        var actos = this.Session["PreciosASPAD"] as ReadOnlyCollection<Acto>;
+        var actosCentro = this.Session["Actos"] as ReadOnlyCollection<Acto>;
 
         var list = actos.OrderBy(a => a.EspecialidadName).ThenBy(a=>a.Description).ToList();
         int cont = 1;
@@ -118,7 +119,7 @@ public partial class CuadroMedico : Page
 
             res.Append(RenderActo(acto));
 
-            if (acto.Ofertado)
+            if (actosCentro.Any(a=>a.Id.Equals(acto.Id, StringComparison.OrdinalIgnoreCase)))
             {
                 if (first)
                 {

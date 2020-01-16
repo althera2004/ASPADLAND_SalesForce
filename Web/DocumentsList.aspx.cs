@@ -40,7 +40,7 @@ public partial class DocumentsList : Page
     {
         get
         {
-            return Colectivo.JsonList(Colectivo.All);
+            return Colectivo.JsonList(Colectivo.AllASPAD);
         }
     }
 

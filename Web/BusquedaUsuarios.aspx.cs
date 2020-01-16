@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web.UI;
-using AspadLandFramework;
+﻿using AspadLandFramework;
 using AspadLandFramework.Item;
 using SbrinnaCoreFramework;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Web.UI;
 
 public partial class BusquedaUsuarios : Page
 {
@@ -28,11 +29,13 @@ public partial class BusquedaUsuarios : Page
 
     public string AseguradoId { get; private set; }
 
+    public string TarifaId { get; private set; }
+
     public string Colectivos
     {
         get
         {
-            return Colectivo.JsonList(Colectivo.All);
+            return Session["ColectivosASPADJson"] as string;
         }
     }
 
@@ -80,6 +83,16 @@ public partial class BusquedaUsuarios : Page
         if (string.IsNullOrEmpty(this.ColectivoId))
         {
             this.Response.Redirect("DashBoard.aspx", Constant.EndResponse);
+        }
+
+        var productos = this.Session["ProductosASPAD"] as ReadOnlyCollection<Producto>;
+        foreach(var producto in productos)
+        {
+            if(producto.ColectivoName.Equals(this.ColectivoId, StringComparison.OrdinalIgnoreCase))
+            {
+                this.TarifaId = producto.TarifaId;
+                break;
+            }
         }
     }
 }

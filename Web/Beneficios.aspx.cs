@@ -33,7 +33,7 @@ public partial class Beneficios : Page
     {
         get
         {
-            return Colectivo.JsonList(Colectivo.All);
+            return Session["ColectivosASPADJson"] as string;
         }
     }
 

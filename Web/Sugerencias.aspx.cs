@@ -40,7 +40,7 @@ public partial class Sugerencias : Page
     {
         get
         {
-            return Colectivo.JsonList(Colectivo.All);
+            return Session["ColectivosASPADJson"] as string;
         }
     }
 

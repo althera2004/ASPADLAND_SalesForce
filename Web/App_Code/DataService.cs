@@ -35,13 +35,13 @@
         public ActionResult GetColectivos()
         {
             var res = ActionResult.NoAction;
-            res.SetSuccess(Colectivo.JsonList(Colectivo.All));
+            res.SetSuccess(Colectivo.JsonList(Colectivo.AllASPAD));
             return res;
         }
 
         [WebMethod(EnableSession = true)]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public string BuscarAsegurado(string nif, string poliza, string nombre, string colectivo)
+        public string BuscarAsegurado(string nif, string poliza, string colectivo)
         {
             var centro = ApplicationUser.Empty;
             if (this.Session["User"] != null)
@@ -49,243 +49,123 @@
                 centro = this.Session["User"] as ApplicationUser;
             }
 
-            //weke
-            ///* CREATE PROCEDURE AspadLand_Trace_Insert
-            //    *   @CentroId uniqueidentifier,
-            //    *   @Type int,
-            //    *   @Busqueda nvarchar(50),
-            //    *   @ColectivoId uniqueidentifier,
-            //    *   @PresupuestoId uniqueidentifier */
-            //using (var cmdT = new SqlCommand("AspadLand_Trace_Insert"))
-            //{
-            //    using (var cnnT = new SqlConnection(ConfigurationManager.ConnectionStrings["cns"].ConnectionString))
-            //    {
-            //        cmdT.Connection = cnnT;
-            //        cmdT.CommandType = CommandType.StoredProcedure;
-            //        cmdT.Parameters.Add(DataParameter.Input("@CentroId", centro.Id));
-            //        cmdT.Parameters.Add(DataParameter.Input("@Type", 9));
-            //        cmdT.Parameters.Add(DataParameter.Input("@Busqueda", poliza + nif));
-            //        cmdT.Parameters.Add(DataParameter.Input("@ColectivoId", colectivo));
-            //        cmdT.Parameters.Add(DataParameter.InputNull("@PresupuestoId"));
-            //        try
-            //        {
-            //            cmdT.Connection.Open();
-            //            cmdT.ExecuteNonQuery();
-            //        }
-            //        finally
-            //        {
-            //            if (cmdT.Connection.State != System.Data.ConnectionState.Closed)
-            //            {
-            //                cmdT.Connection.Close();
-            //            }
-            //        }
-            //    }
-            //}
-
             var dictionary = HttpContext.Current.Session["Dictionary"] as Dictionary<string, string>;
             var res = new StringBuilder("[");
 
-            var query = @"
-                    SELECT 
-                    Name,
-                    (SELECT 
-	                    Asegurado__r.Name,
-	                    Asegurado__r.NIF__pc,
-	                    Asegurado__r.Producto_ASPAD__r.name 
-                    FROM Agrupaci_nAsegPoliza__r),
-                    (SELECT Mascota__r.Name,
-	                    Mascota__r.N_de_microchip__c,
-	                    Mascota__r.Sexo__c,
-	                    Mascota__r.Tipo_de_mascota__c 
-                    FROM Relaci_n_Mascotas_P_lizas__r)
-                    FROM P_liza__c 
-                    WHERE Id IN (
-		                    SELECT P_liza__c FROM Agrupaci_nAsegPoliza__c
-		                    WHERE 
-		                    Asegurado__r.NIF__pc = '94178107F')
-                    AND	Producto_ASPAD__r.Nombre_Compa_ia__c = 'CASER'";
-            var datos = AspadLandFramework.Tools.SalesForcceQuery(query);
-            var first = true;
-            foreach (var result in datos.records)
-            {
-                var record = result as P_liza__c;
-                if (first)
-                {
-                    first = false;
-                }
-                else
-                {
-                    res.Append(",");
-                }
-
-                var asegurado = record.Agrupaci_nAsegPoliza__r.records.First() as AspadLandFramework.Account;
-                var mascota = record.Relaci_n_Mascotas_P_lizas__r.records.First() as Mascota__c;
-
-                res.AppendFormat(
-                        CultureInfo.InvariantCulture,
-                        @"{{
-                                ""Asegurado"":""{0}"",
-                                ""DNI"":""{1}"",
-                                ""Producto"":""{2}"",
-                                ""Poliza"":""{3}"",
-                                ""Chip"":""{4}"",
-                                ""Nombre"":""{5}"",
-                                ""Mascota"":""{6}"",
-                                ""Estado"":""{7}"",
-                                ""Animal"":""{8}"",
-                                ""MascotaId"":""{9}""}}",
-                                SbrinnaCoreFramework.Tools.JsonCompliant(asegurado.Name),
-                                asegurado.NIF__c.ToUpperInvariant().Trim(),
-                                asegurado.Producto_ASPAD__c.Trim(),
-                                record.Name.Trim(),
-                                mascota.N_de_microchip__c,
-                                mascota.Name,
-                                mascota.Sexo__c,
-                                1,
-                                mascota.Tipo_de_mascota__c,
-                                mascota.Id);
-            }
-            /*var query = @"
-            SELECT     
-	            P.qes_AseguradoIdName AS FullName,
-	            P.qes_dni, 
-	            P.qes_name, 
-	            M.statecode, 
-                ISNULL(M.qes_name,'') AS mascota,
-                M.qes_Tipomascota,
-                M.qes_Sexo, 
-                M.qes_mascotasId, 
-	            ISNULL(M.qes_NMicrochip,'') AS MicroChip,
-	            P.qes_ProductoIdName, 
-	            P.qes_ColectivoId
-            FROM dbo.qes_poliza P WITH (NOLOCK)
-            INNER JOIN dbo.qes_mascotas M WITH(NOLOCK)
-            ON	M.qes_PolizaId = P.qes_polizaId
-            WHERE  -- weke añadir pertenencia a al centro
-	            P.statecode = 0
-            AND M.statecode = 0";
+            var extraWhere = string.Empty;
 
             if (!string.IsNullOrEmpty(nif))
             {
-                query += " AND P.qes_dni = '" + nif + "'";
+                extraWhere = string.Format(
+                    CultureInfo.InvariantCulture,
+                    @"AND Id IN(
+                    SELECT P_liza__c FROM Agrupaci_nAsegPoliza__c
+                    WHERE Asegurado__r.NIF__pc = '{0}')", nif);
             }
 
             if (!string.IsNullOrEmpty(poliza))
             {
-                query += " AND P.qes_name = '" + poliza + "'";
+                extraWhere = string.Format(CultureInfo.InvariantCulture, "AND P_liza__c.Name = '{0}'", poliza);
             }
 
-            if (!string.IsNullOrEmpty(colectivo))
-            {
-                query += " AND P.qes_colectivoId = '" + colectivo + "'";
-            }
+            var query = string.Format(
+                CultureInfo.InvariantCulture,
+                @"
+                    SELECT 
+                        Id,
+                        Name,
+                        producto_ASPAD__r.Id,
+                        producto_ASPAD__r.Name,
+                        Producto_ASPAD__r.Nombre_Compa_ia__c,
+                        (SELECT 
+	                        Asegurado__r.Id,
+	                        Asegurado__r.Name,
+	                        Asegurado__r.NIF__pc,
+	                        Asegurado__r.Producto_ASPAD__r.name 
+                        FROM Agrupaci_nAsegPoliza__r),
+                        (SELECT                         
+                            Mascota__r.Id,
+                            Mascota__r.Name,
+	                        Mascota__r.N_de_microchip__c,
+	                        Mascota__r.Sexo__c,
+	                        Mascota__r.Tipo_de_mascota__c 
+                        FROM Relaci_n_Mascotas_P_lizas__r)
+                        FROM P_liza__c                      
+                        WHERE Producto_ASPAD__r.Nombre_Compa_ia__c = '{0}'
+                        {1}",
+                colectivo,
+                extraWhere);
+            var datos = AspadLandFramework.Tools.SalesForcceQuery(query);
+            var first = true;
 
-            query += " ORDER BY P.qes_AseguradoIdName ASC, P.qes_ProductoIdName ASC";
-
-            using (var cmd = new SqlCommand(query))
+            if (datos.records != null && datos.records.Count() > 0)
             {
-                cmd.CommandType = CommandType.Text;
-                using (var cnn = new SqlConnection(ConfigurationManager.ConnectionStrings["cns"].ConnectionString))
+                foreach (var result in datos.records)
                 {
-                    cmd.Connection = cnn;
-                    try
+                    var record = result as P_liza__c;
+
+                    var aseguradoRel = record.Agrupaci_nAsegPoliza__r.records.ToList() as List<sObject>;
+
+                    var aseguradoNombre = string.Empty;
+                    var aseguradoNIF = string.Empty;
+                    foreach (sObject aseguradoObject in aseguradoRel)
                     {
-                        cmd.Connection.Open();
-                        using (var rdr = cmd.ExecuteReader())
+                        var asegurado = aseguradoObject as AspadLandFramework.Agrupaci_nAsegPoliza__c;
+                        if (!string.IsNullOrEmpty(asegurado.Asegurado__r.NIF__pc))
                         {
-                            bool first = true;
-                            while (rdr.Read())
-                            {
-                                if (first)
-                                {
-                                    first = false;
-                                }
-                                else
-                                {
-                                    res.Append(",");
-                                }
+                            aseguradoNIF = asegurado.Asegurado__r.NIF__pc;
+                        }
 
-                                string chip = string.Empty;
-                                if (!rdr.IsDBNull(8))
-                                {
-                                    chip = rdr.GetString(8).Trim();
-                                }
-
-                                string mascota = string.Empty;
-                                if (!rdr.IsDBNull(4))
-                                {
-                                    mascota = rdr.GetString(4).Trim().Replace("\"", string.Empty);
-                                }
-
-                                string estado = rdr.GetInt32(3) == 0 ? dictionary["Item_Poliza_Status_Active"] : dictionary["Item_Poliza_Status_Inactive"];
-
-                                string animal = string.Empty;
-
-                                if (!rdr.IsDBNull(5))
-                                {
-                                    if (rdr[5].ToString() == "100000000")
-                                    {
-                                        animal = dictionary["Item_Mascota_Type_DogMale"];
-                                    }
-                                    else
-                                    {
-                                        animal = dictionary["Item_Mascota_Type_CatMale"];
-                                    }
-                                }
-
-                                if (!rdr.IsDBNull(6))
-                                {
-                                    if (rdr[6].ToString() == "100000001")
-                                    {
-                                        if (animal == dictionary["Item_Mascota_Type_DogMale"])
-                                        {
-                                            animal = dictionary["Item_Mascota_Type_DogFemale"];
-                                        }
-                                        else
-                                        {
-                                            if (animal == dictionary["Item_Mascota_Type_CatMale"])
-                                            {
-                                                animal = dictionary["Item_Mascota_Type_CatFemale"];
-                                            }
-                                        }
-                                    }
-                                }
-
-                                res.AppendFormat(
-                                    CultureInfo.InvariantCulture,
-                                    @"{{
-                                ""Asegurado"":""{0}"",
-                                ""DNI"":""{1}"",
-                                ""Producto"":""{2}"",
-                                ""Poliza"":""{3}"",
-                                ""Chip"":""{4}"",
-                                ""Nombre"":""{8}"",
-                                ""Mascota"":""{5}"",
-                                ""Estado"":""{6}"",
-                                ""Animal"":""{7}"",
-                                ""MascotaId"":""{9}""}}",
-                                SbrinnaCoreFramework.Tools.JsonCompliant(rdr.GetString(0).Trim()),
-                                rdr.GetString(1).Trim().ToUpperInvariant(),
-                                rdr.GetString(9).Trim(),
-                                rdr.GetString(2).Trim(),
-                                chip.Trim(),
-                                mascota.Trim(),
-                                estado,
-                                animal,
-                                SbrinnaCoreFramework.Tools.JsonCompliant(rdr.GetString(4).Trim()),
-                                rdr.GetGuid(7));
-                            }
+                        if (!string.IsNullOrEmpty(asegurado.Asegurado__r.Name))
+                        {
+                            aseguradoNombre = asegurado.Asegurado__r.Name;
                         }
                     }
-                    finally
+
+                    var mascotaRel = record.Relaci_n_Mascotas_P_lizas__r.records.ToList() as List<sObject>;
+
+                    foreach (sObject mascotaObject in mascotaRel)
                     {
-                        if (cmd.Connection.State != System.Data.ConnectionState.Closed)
+                        if (first)
                         {
-                            cmd.Connection.Close();
+                            first = false;
                         }
+                        else
+                        {
+                            res.Append(",");
+                        }
+
+                        var mascota = mascotaObject as Relaci_n_Mascotas_P_lizas__c;
+                        res.AppendFormat(
+                                CultureInfo.InvariantCulture,
+                                @"{{
+                                    ""Asegurado"":""{0}"",
+                                    ""DNI"":""{1}"",
+                                    ""Producto"":""{2}"",
+                                    ""Poliza"":""{3}"",
+                                    ""Chip"":""{4}"",
+                                    ""Nombre"":""{5}"",
+                                    ""Mascota"":""{6}"",
+                                    ""Estado"":""{7}"",
+                                    ""Animal"":""{8}"",
+                                    ""MascotaId"":""{9}"",
+                                    ""PolizaId"":""{10}"",
+                                    ""Colectivo"":""{11}""}}",
+                                        SbrinnaCoreFramework.Tools.JsonCompliant(aseguradoNombre),
+                                        aseguradoNIF.ToUpperInvariant().Trim(),
+                                        record.Producto_ASPAD__r.Name,
+                                        record.Name.Trim(),
+                                        mascota.Mascota__r.N_de_microchip__c,
+                                        mascota.Mascota__r.Name,
+                                        mascota.Mascota__r.Sexo__c,
+                                        1,
+                                        mascota.Mascota__r.Tipo_de_mascota__c,
+                                        mascota.Mascota__r.Id,
+                                        record.Id,
+                                        record.Producto_ASPAD__r.Nombre_Compa_ia__c);
                     }
                 }
-            }*/
+            }
 
             res.Append("]");
             return res.ToString();
@@ -395,9 +275,9 @@
             int columnPresupuestoId = 0;
             int columnCode = 1;
             int columnActoId = 2;
-            int columnActoName =3;
+            int columnActoName = 3;
             int columnEspecialidadName = 4;
-            int columnAmount=5;
+            int columnAmount = 5;
             int columnDiscount = 6;
             int columnFecha = 7;
             int columnObservaciones = 8;
@@ -416,7 +296,7 @@
                     {
                         cmd.Connection.Open();
                         bool first = true;
-                        using(var rdr = cmd.ExecuteReader())
+                        using (var rdr = cmd.ExecuteReader())
                         {
                             while (rdr.Read())
                             {
@@ -472,7 +352,7 @@
                     }
                     finally
                     {
-                        if(cmd.Connection.State != System.Data.ConnectionState.Closed)
+                        if (cmd.Connection.State != System.Data.ConnectionState.Closed)
                         {
                             cmd.Connection.Close();
                         }
@@ -486,7 +366,7 @@
 
         [WebMethod(EnableSession = true)]
         [ScriptMethod]
-        public ActionResult SavePresupuesto(Guid centroId, Guid presupuestoOriginalId, Guid polizaId, Guid mascotaId, string data, string presupuestoObservaciones, int status, string code)
+        public ActionResult SavePresupuesto(string centroId, Guid presupuestoOriginalId, string polizaId, string mascotaId, string data, string presupuestoObservaciones, int status, string code)
         {
             var res = ActionResult.NoAction;
             var presupuestoId = Guid.NewGuid();
@@ -495,9 +375,9 @@
             if (string.IsNullOrEmpty(code))
             {
                 /* CREATE PROCEDURE ASPADLAND_GetPresupuestoCode
-                 *   @CentroId uniqueidentifier,
-                 *   @PresupuestoId uniqueidentifier */
-                using (var cmd2 = new SqlCommand("ASPADLAND_GetPresupuestoCode"))
+                 *   @CentroId nvarchar(50),
+                 *   @PresupuestoId nvarchar(50) */
+                using (var cmd2 = new SqlCommand("ASPADLAND_Salesforce_GetPresupuestoCode"))
                 {
                     cmd2.CommandType = CommandType.StoredProcedure;
                     cmd2.Parameters.Add(DataParameter.Input("@CentroId", centroId));
@@ -532,7 +412,7 @@
             {
                 string query = string.Format(
                     CultureInfo.InvariantCulture,
-                    "DELETE FROM [dbo].[AspadLandPresuspuesto] WHERE Code = '{0}' AND CentroId = '{1}'",
+                    "DELETE FROM [dbo].[AspadLandPresuspuesto] WHERE Code = '{0}' AND CentroId2 = '{1}'",
                     code,
                     centroId);
                 using (var cmd2 = new SqlCommand(query))
@@ -558,11 +438,11 @@
             }
 
             bool ok = true;
-            /* CREATE PROCEDURE ASPADLAND_PresupuestoInsert2
-             *   @CentroId uniqueidentifier,
-             *   @PolizaId uniqueidentifier,
-             *   @MascotaId uniqueidentifier,
-             *   @Actoid uniqueidentifier,
+            /* CREATE PROCEDURE ASPADLAND_SalesForce_PresupuestoInsert
+             *   @CentroId nvarchar(50),
+             *   @PolizaId nvarchar(50),
+             *   @MascotaId nvarchar(50),
+             *   @Actoid nvarchar(50),
              *   @Amount decimal(18,3),
              *   @Discount decimal(18,3),
              *   @Status int,
@@ -572,7 +452,7 @@
              *   @Code nvarchar(50),
              *   @Count int */
 
-            using (var cmd = new SqlCommand("ASPADLAND_presupuestoInsert2"))
+            using (var cmd = new SqlCommand("ASPADLAND_SalesForce_PresupuestoInsert"))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
                 using (var cnn = new SqlConnection(ConfigurationManager.ConnectionStrings["cns"].ConnectionString))
@@ -587,23 +467,25 @@
                             cmd.Parameters.Clear();
                             cmd.Parameters.Add(DataParameter.Input("@PresupuestoId", presupuestoId));
                             cmd.Parameters.Add(DataParameter.Input("@PresupuestoOriginalId", presupuestoOriginalId));
-                            cmd.Parameters.Add(DataParameter.Input("@CentroId", centroId));
-                            cmd.Parameters.Add(DataParameter.Input("@PolizaId", polizaId));
-                            cmd.Parameters.Add(DataParameter.Input("@MascotaId", mascotaId));
+                            cmd.Parameters.Add(DataParameter.Input("@CentroId", centroId, 50));
+                            cmd.Parameters.Add(DataParameter.Input("@PolizaId", polizaId, 50));
+                            cmd.Parameters.Add(DataParameter.Input("@MascotaId", mascotaId, 50));
                             cmd.Parameters.Add(DataParameter.Input("@Fecha", DateTime.Now));
                             cmd.Parameters.Add(DataParameter.Input("@Status", status));
                             cmd.Parameters.Add(DataParameter.Input("@Code", code));
                             cmd.Parameters.Add(DataParameter.Input("@Count", count));
                             cmd.Parameters.Add(DataParameter.Input("@PresupuestoObservaciones", presupuestoObservaciones, 500));
 
-                            string actoIdText = part.Split(':')[1].Split(',')[0].Replace("\"", string.Empty);// part.Split(':')[0].Split(':')[1].Replace("\"", "");
-                            string amountText = part.Split(':')[3].Split(',')[0].Replace("\"", string.Empty);// part.Split(':')[2].Split(':')[1].Replace("\"", "");
-                            string discountText = part.Split(':')[4].Split(',')[0].Replace("\"", string.Empty);// part.Split(':')[3].Split(':')[1].Replace("\"", "");
-                            string actoName = part.Split(':')[2].Replace("\"", string.Empty).Replace(",Amount", string.Empty);// part.Split(':')[1].Split(':')[1].Replace("\"", "");
-                            string actoObservaciones = part.Split(':')[6].Split(',')[0].Replace("\"", string.Empty).Replace("}]", string.Empty);// part.Split(':')[5].Split(':')[1].Split('}')[0].Replace("\"", "");
+                            string actoIdText = part.Split(':')[1].Split(',')[0].Replace("\"", string.Empty);
+                            string amountText = part.Split(':')[3].Split(',')[0].Replace("\"", string.Empty);
+                            string discountText = part.Split(':')[4].Split(',')[0].Replace("\"", string.Empty);
+                            string actoName = part.Split(':')[2].Replace("\"", string.Empty).Replace(",Amount", string.Empty);
+                            string especialidad = part.Split(':')[5].Replace("\"", string.Empty).Replace(",T", string.Empty);
+                            string actoObservaciones = part.Split(':')[7].Split(',')[0].Replace("\"", string.Empty).Replace("}]", string.Empty);
 
                             cmd.Parameters.Add(DataParameter.Input("@ActoName", actoName, 100));
-                            cmd.Parameters.Add(DataParameter.Input("@ActoId", new Guid(actoIdText)));
+                            cmd.Parameters.Add(DataParameter.Input("@Especialidad", especialidad, 100));
+                            cmd.Parameters.Add(DataParameter.Input("@ActoId", actoIdText));
                             cmd.Parameters.Add(DataParameter.Input("@ActoObservaciones", actoObservaciones, 500));
 
                             if (amountText == "null")
@@ -612,7 +494,7 @@
                             }
                             else
                             {
-                                cmd.Parameters.Add(DataParameter.Input("@Amount", Convert.ToDecimal(amountText.Replace(".",","))));
+                                cmd.Parameters.Add(DataParameter.Input("@Amount", Convert.ToDecimal(amountText.Replace(".", ","))));
                             }
 
                             if (discountText == "null")
@@ -621,7 +503,7 @@
                             }
                             else
                             {
-                                cmd.Parameters.Add(DataParameter.Input("@Discount", Convert.ToDecimal(discountText.Replace(".",","))));
+                                cmd.Parameters.Add(DataParameter.Input("@Discount", Convert.ToDecimal(discountText.Replace(".", ","))));
                             }
 
                             if (status == 1)
@@ -660,7 +542,6 @@
             return res;
         }
 
-
         [WebMethod(EnableSession = true)]
         [ScriptMethod]
         public ActionResult DiscardPresupuesto(Guid presupuestoId)
@@ -681,7 +562,7 @@
                         cmd.ExecuteNonQuery();
                         res.SetSuccess();
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         res.SetFail(ex);
                     }
@@ -693,24 +574,24 @@
                         }
                     }
                 }
-            }            
+            }
 
             return res;
         }
 
-        public ActionResult MarcarActoRealizado(Guid presupuestoId, Guid actoId, Guid actoRealizadoId, DateTime fecha)
+        public ActionResult MarcarActoRealizado(Guid presupuestoId, string actoId, string actoRealizadoId, DateTime fecha)
         {
             var res = ActionResult.NoAction;
-            /* CREATE PROCEDURE ASPADLAND_PresupuestoRealizado
+            /* CREATE PROCEDURE ASPADLAND_Salesforce_PresupuestoRealizado
              *   @PresupuestoId uniqueidentifier,
-             *   @ActoId uniqueidentifier,
-             *   @ActoRealizadoId uniqueidentifier */
-            using (var cmd = new SqlCommand("ASPADLAND_PresupuestoRealizado"))
+             *   @ActoId nvarchar(50),
+             *   @ActoRealizadoId nvarchar(50) */
+            using (var cmd = new SqlCommand("ASPADLAND_Salesforce_PresupuestoRealizado"))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add(DataParameter.Input("@PresupuestoId", presupuestoId));
-                cmd.Parameters.Add(DataParameter.Input("@ActoId", actoId));
-                cmd.Parameters.Add(DataParameter.Input("@ActoRealizadoId", actoRealizadoId));
+                cmd.Parameters.Add(DataParameter.Input("@ActoId", actoId, 50));
+                cmd.Parameters.Add(DataParameter.Input("@ActoRealizadoId", actoRealizadoId, 50));
                 cmd.Parameters.Add(DataParameter.Input("@Fecha", fecha));
                 using (var cnn = new SqlConnection(ConfigurationManager.ConnectionStrings["cns"].ConnectionString))
                 {
@@ -743,7 +624,7 @@
         public ActionResult RealizarPresupuesto(Guid presupuestoId, Guid centroId, DateTime fecha)
         {
             var res = ActionResult.NoAction;
-            using(var cmd = new SqlCommand("ASPADLAND_GetPresupuestoPendienteByPresupuestoIdToCRM"))
+            using (var cmd = new SqlCommand("ASPADLAND_GetPresupuestoPendienteByPresupuestoIdToCRM"))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add(DataParameter.Input("@PresupuestoId", presupuestoId));
@@ -755,7 +636,7 @@
                     try
                     {
                         cmd.Connection.Open();
-                        using(var rdr = cmd.ExecuteReader())
+                        using (var rdr = cmd.ExecuteReader())
                         {
                             while (rdr.Read())
                             {
@@ -786,7 +667,7 @@
 
                                 if (res.Success)
                                 {
-                                    res = MarcarActoRealizado(presupuestoId, rdr.GetGuid(0), new Guid(res.ReturnValue.ToString()), fecha);
+                                    res = MarcarActoRealizado(presupuestoId, rdr.GetString(0), res.ReturnValue.ToString(), fecha);
                                 }
                                 else
                                 {
@@ -795,13 +676,13 @@
                             }
                         }
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         res.SetFail(ex);
                     }
                     finally
                     {
-                        if(cmd.Connection.State != System.Data.ConnectionState.Closed)
+                        if (cmd.Connection.State != System.Data.ConnectionState.Closed)
                         {
                             cmd.Connection.Close();
                         }

@@ -70,21 +70,21 @@
                                 <div class="row" style="padding-bottom:8px;display:none;" id="DataRow1">
                                     <div class="col-sm-12">
                                         <label class="col-sm-1 col-xs-3"><%=AspadLandFramework.ApplicationDictionary.Translate("Item_Presupuesto_Label_Asegurado") %>:</label>
-                                        <label class="col-sm-7 col-xs-9" id="DataAseguradoName"><strong><asp:Literal runat="server" ID="LtAsegurado"></asp:Literal></strong></label>
+                                        <label class="col-sm-7 col-xs-9" id="DataAseguradoName"><strong><%=this.PolizaNum %></strong></label>
                                         <label class="col-sm-1 col-xs-3"><%=AspadLandFramework.ApplicationDictionary.Translate("Item_Presupuesto_Label_Colectivo") %>:</label>
-                                        <label class="col-sm-3 col-xs-9" id="DataColectivo"><strong><asp:Literal runat="server" ID="LtColectivo"></asp:Literal></strong></label>
+                                        <label class="col-sm-3 col-xs-9" id="DataColectivo"><strong><%=this.ColectivoId %></strong></label>
                                     </div>
                                 </div>
                                 <div class="row" style="padding-bottom:8px;">
                                     <div class="col-sm-12 col-xs-12">
                                         <label class="col-sm-1"><%=AspadLandFramework.ApplicationDictionary.Translate("Item_Presupuesto_Label_Mascota") %>:</label>
-                                        <label class="col-sm-2"><strong><asp:Literal runat="server" ID="LtNombreMascota"></asp:Literal></strong></label>
+                                        <label class="col-sm-2"><strong><%=this.Mascota.Name %></strong></label>
                                         <label class="col-sm-1"><%=AspadLandFramework.ApplicationDictionary.Translate("Item_Presupuesto_Label_Chip") %>:</label>
-                                        <label class="col-sm-2"><strong><asp:Literal runat="server" ID="LtMicrohip"></asp:Literal></strong></label>
+                                        <label class="col-sm-2"><strong><%=this.Mascota.Chip %></strong></label>
                                         <label class="col-sm-1"><%=AspadLandFramework.ApplicationDictionary.Translate("Item_Presupuesto_Label_TipoMascota") %>:</label>
-                                        <label class="col-sm-1"><strong><asp:Literal runat="server" ID="LtTipoMascota"></asp:Literal></strong></label>
+                                        <label class="col-sm-1"><strong><%=this.Mascota.Tipo %></strong></label>
                                         <label class="col-sm-1"><%=AspadLandFramework.ApplicationDictionary.Translate("Item_Presupuesto_Label_SexoMascota") %>:</label>
-                                        <label class="col-sm-3"><strong><asp:Literal runat="server" ID="LtSexo"></asp:Literal></strong></label>
+                                        <label class="col-sm-3"><strong><%=this.Mascota.Sexo %></strong></label>
                                     </div>
                                 </div>
                                 <div class="row" style="display:none;" id="rowWarningChip">

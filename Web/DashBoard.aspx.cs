@@ -85,16 +85,14 @@ public partial class Customer_DashBoard : Page
                 {
                     res.AppendFormat(
                         CultureInfo.InvariantCulture,
-                        @"<img src=""/logopolizas/{1}.png"" alt=""{1}"" title=""{1}"" id=""{0}"" onclick=""Go(this);"" style=""margin:20px;cursor:pointer;"" />",
-                        colectivo.Id,
+                        @"<img src=""/logopolizas/{0}.png"" alt=""{0}"" title=""{0}"" id=""{0}"" onclick=""Go(this);"" style=""margin:20px;cursor:pointer;"" />",
                         colectivo.Description);
                 }
                 else
                 {
                     res.AppendFormat(
                         CultureInfo.InvariantCulture,
-                        @"<img src=""/logopolizas/{1}_bn.png"" alt=""{1}"" id=""{0}"" style=""margin:20px;cursor:pointer;"" class=""tooltip-error"" title=""{2}"" data-rel=""tooltip"" data-placement=""bottom"" />",
-                        colectivo.Id,
+                        @"<img src=""/logopolizas/{0}_bn.png"" alt=""{0}"" id=""{0}"" style=""margin:20px;cursor:pointer;"" class=""tooltip-error"" title=""{1}"" data-rel=""tooltip"" data-placement=""bottom"" />",
                         colectivo.Description,
                         this.Dictionary["DashBoard_NOASPAD"]);
                 }

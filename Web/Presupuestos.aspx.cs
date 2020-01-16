@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Web.UI;
 using AspadLandFramework;
@@ -38,20 +40,24 @@ public partial class Presupuestos : Page
     {
         get
         {
-            return Colectivo.JsonList(Colectivo.All);
+            return Session["ColectivosASPADJson"] as string;
         }
     }
 
     /// <summary>Application user logged in session</summary>
     private ApplicationUser user;
 
-    public Guid PolizaId { get; private set; }
+    public string PolizaId { get; private set; }
 
     public string MascotaId { get; private set; }
+
+    public string TarifaId { get; private set; }
 
     public string AseguradoId { get; private set; }
 
     public string PolizaNum { get; private set; }
+
+    public Mascota Mascota { get; private set; }
 
     /// <summary>Gets the dictionary for interface texts</summary>
     public Dictionary<string, string> Dictionary { get; private set; }
@@ -95,187 +101,94 @@ public partial class Presupuestos : Page
         var codedQuery = new CodedQuery();
         codedQuery.SetQuery(this.Request.QueryString);
         this.MascotaId = codedQuery.GetByKey<string>("mascotaId");
-        this.GetData();
+        this.Mascota = Mascota.ById(this.MascotaId);
+        this.TarifaId = codedQuery.GetByKey<string>("tarifaId");
+        this.ColectivoId = codedQuery.GetByKey<string>("colectivo");
+        this.PolizaId = codedQuery.GetByKey<string>("polizaId");
         this.GetActos();
         this.RenderActosRealizados();
-        //this.RenderPresupuestos();
-    }
 
-    private void GetData()
-    {
-        var query = string.Format(
-            CultureInfo.InvariantCulture,
-            @"select
-	            ISNULL(M.qes_name,'<i>sin nombre</i>'),
-	            M.qes_Sexo,
-	            M.qes_Tipomascota,
-	            ISNULL(M.qes_NMicrochip,''),
-	            P.qes_polizaId,
-	            ISNULL(P.qes_name,''),
-	            P.qes_AseguradoId,
-                P.qes_AseguradoIdName,
-	            P.qes_dni,
-	            P.qes_ColectivoId,
-	            P.qes_ColectivoIdName,
-                P.qes_productoIdName
-            FROM qes_mascotas M WITH(NOLOCK)
-            INNER JOIN qes_poliza P WITH(NOLOCK)
-            ON M.qes_PolizaId = P.qes_polizaId
-            WHERE M.qes_mascotasId  = '{0}'",
-            this.MascotaId);
-        using (var cmd = new SqlCommand(query))
+        var poliza = Poliza.ById(this.PolizaId);
+        if (!string.IsNullOrEmpty(poliza.AseguradoNombre))
         {
-            cmd.CommandType = CommandType.Text;
-            using(var cnn = new SqlConnection(ConfigurationManager.ConnectionStrings["cns"].ConnectionString))
-            {
-                cmd.Connection = cnn;
-                cmd.Connection.Open();
-                using(var rdr = cmd.ExecuteReader())
-                {
-                    if (rdr.HasRows)
-                    {
-
-                        rdr.Read();
-                        this.AseguradoId = rdr.GetString(8).ToUpperInvariant();
-                        this.PolizaNum = rdr.GetString(5).ToUpperInvariant();
-                        this.PolizaId = rdr.GetGuid(4);
-                        this.ColectivoId = rdr.GetGuid(9).ToString();
-                        this.LtNombreMascota.Text = rdr.GetString(0);
-                        this.LtMicrohip.Text = rdr.GetString(3);
-                        this.Chip = rdr.GetString(3);
-                        this.LtColectivo.Text = "<a title=\"Descargar baremo en formato PDF\" href=\"/Documentos/Tarifas/" + rdr.GetString(10).Replace(" ", string.Empty) + "_" + rdr.GetString(11).Replace(" ", string.Empty) + ".pdf\" target=\"_blank\" style=\"font-size:11px;\"><div id=\"TableBaremo\" style=\"display:inline-block;\">Ver baremo<br />" + rdr.GetString(10) + " / " + rdr.GetString(11) + "</div><div id=\"_TableBaremoIcon\" style=\"display:inline-block;margin-left:4px;margin-top:-4px;vertical-align:super;\"><img src=\"logopolizas/" + this.ColectivoId + ".png\" style=\"max-height:30px;\" /></div></a>";
-                        this.LtAsegurado.Text = "<div onclick=\"GoBusquedaUsuarios(colectivoId, aseguradoId, polizaNum);\"><a href=\"#\">" + rdr.GetString(8).ToUpperInvariant() + " - " + rdr.GetString(7) + "<div style=\"font-size:14px;color:#333;margin-top:8px;\">Póliza:&nbsp;" + rdr.GetString(5) + "</a></div></div>";
-
-                        if (!rdr.IsDBNull(1))
-                        {
-                            var sexo = rdr.GetInt32(1);
-                            if (sexo == 100000000) { LtSexo.Text = "Macho"; }
-                            if (sexo == 100000001) { LtSexo.Text = "Hembra"; }
-                        }
-
-                        if (!rdr.IsDBNull(2))
-                        {
-                            var tipo = rdr.GetInt32(2);
-                            if (tipo == 100000000) { LtTipoMascota.Text = "Perro"; }
-                            if (tipo == 100000001) { LtTipoMascota.Text = "Gato"; }
-                        }
-                    }
-                }
-            }
+            this.PolizaNum = poliza.AseguradoNombre + " - " + poliza.Numero;
+        }
+        else
+        {
+            this.PolizaNum = poliza.Numero;
         }
     }
 
     private void GetActos()
     {
-        var query = string.Format(
-            CultureInfo.InvariantCulture,
-            @"select DISTINCT
-	            E.qes_especialidadId,
-	            E.qes_especialidadIdName AS EspecialidadName,
-	            E.ProductId,
-	            PPL.ProductIdName,
-	            PPL.Amount_Base,
-	            PPL.Percentage,
-	            PPL.PriceLevelId,
-	            PPL.PriceLevelIdName
-            from product E WITH(NOLOCK)
-            INNER JOIN ProductPriceLevel PPL WITH(NOLOCK)
-            ON	 PPL.ProductId = E.ProductId
-            INNER JOIN qes_poliza POL
-            ON	POL.qes_TarifaId = PPL.PriceLevelId
-            AND POL.qes_polizaId = '{1}'
-            INNER JOIN qes_centro_servicios PC WITH(NOLOCK)
-	            INNER JOIN qes_centro_especialidad EC WITH(NOLOCK)
-	            ON	EC.qes_EspecialidadId = PC.qes_EspecialidadId
-	            AND	EC.qes_CentroId = PC.qes_CentroId
-            ON PC.qes_especialidadId = E.qes_especialidadId
-            AND PC.statecode = 0
-            where
-	            PC.qes_CentroId ='{0}'
-            AND E.statecode = 0
-	
-            ORDER BY E.qes_especialidadIdName,PPL.ProductIdName",
-            this.user.Id,
-            this.PolizaId);
         var res = new StringBuilder("[");
         var resCombo = new StringBuilder();
-
-        using(var cmd = new SqlCommand(query))
+        var precios = Acto.ByTarifa(this.TarifaId).OrderBy(a => a.EspecialidadName);
+        var especialidadIdActual = string.Empty;
+        var first = true;
+        foreach (var acto in precios)
         {
-            cmd.CommandType = CommandType.Text;
-            using (var cnn = new SqlConnection(ConfigurationManager.ConnectionStrings["cns"].ConnectionString))
+            var especialidadId = acto.EspecialidadName;
+            if (especialidadId != especialidadIdActual)
             {
-                cmd.Connection = cnn;
-                cmd.Connection.Open();
-                using(var rdr = cmd.ExecuteReader())
+                if (especialidadIdActual != string.Empty)
                 {
-                    var especialidadIdActual = Guid.Empty;
-                    bool first = true;
-                    while (rdr.Read())
-                    {
-                        var especialidadId = rdr.GetGuid(0);
-                        if (especialidadId != especialidadIdActual)
-                        {
-                            if (especialidadIdActual != Guid.Empty)
-                            {
-                                res.Append("]},");
-                                res.Append(Environment.NewLine);
-                            }
-
-                            especialidadIdActual = especialidadId;
-                            first = true;
-                            res.AppendFormat(
-                                CultureInfo.InvariantCulture,
-                                @"{{""Id"":""{0}"",""Name"":""{1}"",""Actos"":[",
-                                especialidadId,
-                                rdr.GetString(1));
-                        }
-
-                        if (first)
-                        {
-                            first = false;
-                        }
-                        else
-                        {
-                            res.Append(",");
-                        }
-
-                        var amount = "null";
-                        var percentage = "null";
-
-                        if (!rdr.IsDBNull(4))
-                        {
-                            amount = string.Format("{0:####0.00}", rdr.GetDecimal(4)).Replace(',', '.');
-                        }
-
-                        if (!rdr.IsDBNull(5))
-                        {
-                            percentage = string.Format("{0:####0.00}", rdr.GetDecimal(5)).Replace(',', '.');
-                        }
-
-                        res.AppendFormat(
-                            CultureInfo.InvariantCulture,
-                            @"{{""Id"":""{0}"",""Name"":""{1}"",""Amount"":{2},""Discount"":{3},""T"":""{4}""}}",
-                            rdr.GetGuid(2),
-                            SbrinnaCoreFramework.Tools.JsonCompliant(rdr.GetString(3)),
-                            amount,
-                            percentage,
-                            SbrinnaCoreFramework.Tools.JsonCompliant(rdr.GetString(7)));
-
-                        resCombo.AppendFormat(
-                            CultureInfo.InvariantCulture,
-                            @"<option value=""{0}"">{1} - {2}</option>",
-                            rdr.GetGuid(2),
-                            rdr.GetString(1),
-                            rdr.GetString(3));
-                    }
-
-                    if (especialidadIdActual != Guid.Empty)
-                    {
-                        res.Append("]}");
-                    }
+                    res.Append("]},");
+                    res.Append(Environment.NewLine);
                 }
+
+                especialidadIdActual = especialidadId;
+                first = true;
+                res.AppendFormat(
+                    CultureInfo.InvariantCulture,
+                    @"{{""Id"":""{0}"",""Name"":""{1}"",""Actos"":[",
+                    especialidadId,
+                    especialidadId);
             }
+
+            if (first)
+            {
+                first = false;
+            }
+            else
+            {
+                res.Append(",");
+            }
+
+            var amount = "null";
+            var percentage = "null";
+
+            if (acto.Precio != null)
+            {
+                amount = string.Format("{0:####0.00}", acto.Precio).Replace(',', '.');
+            }
+
+            if (acto.Porcentage != null)
+            {
+                percentage = string.Format("{0:####0.00}", acto.Porcentage).Replace(',', '.');
+            }
+
+            res.AppendFormat(
+                CultureInfo.InvariantCulture,
+                @"{{""Id"":""{0}"",""Name"":""{1}"",""Amount"":{2},""Discount"":{3},""E"":""{5}"",""T"":""{4}""}}",
+                acto.Id,
+                SbrinnaCoreFramework.Tools.JsonCompliant(acto.Description),
+                amount,
+                percentage,
+                SbrinnaCoreFramework.Tools.JsonCompliant(TarifaId),
+                SbrinnaCoreFramework.Tools.JsonCompliant(especialidadId));
+
+            resCombo.AppendFormat(
+                CultureInfo.InvariantCulture,
+                @"<option value=""{0}"">{1} - {2}</option>",
+                acto.Id,
+                acto.EspecialidadName,
+                acto.Description);
+        }
+
+        if (especialidadIdActual != string.Empty)
+        {
+            res.Append("]}");
         }
 
         res.Append("]");
@@ -336,7 +249,6 @@ public partial class Presupuestos : Page
             }
         }
 
-
         this.LtPendientes.Text = res.ToString();
     }
 
@@ -361,7 +273,6 @@ public partial class Presupuestos : Page
     private string RenderActo(Guid actoId, string especialidad, string acto, decimal amount, decimal discount, string observaciones)
     {
         string observacionesDiv = string.Empty;
-
         if (!string.IsNullOrEmpty(observacionesDiv))
         {
             observacionesDiv = string.Format(
@@ -415,7 +326,7 @@ public partial class Presupuestos : Page
             this.MascotaId);
 
         var count = 0;
-        using (var cmd = new SqlCommand(query))
+        /*using (var cmd = new SqlCommand(query))
         {
             cmd.CommandType = CommandType.Text;
             using (var cnn = new SqlConnection(ConfigurationManager.ConnectionStrings["cns"].ConnectionString))
@@ -469,7 +380,7 @@ public partial class Presupuestos : Page
                     }
                 }
             }
-        }
+        }*/
 
         json.Append("]");
         this.ActosRealizados = json.ToString();

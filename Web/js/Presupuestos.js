@@ -9,23 +9,6 @@ var presupuestoRealizadoId = "";
 var presupuestoSelected = null;
 var code = "";
 
-function FillComboEspecialidades() {
-    return false;
-    /*$("#CmbEspecialidad").html("");
-
-    var defaultOption = document.createElement("option");
-    defaultOption.value = "";
-    defaultOption.appendChild(document.createTextNode("Seleccionar..."));
-    document.getElementById("CmbEspecialidad").appendChild(defaultOption);
-
-    for (var x = 0; x < precios.length; x++) {
-        var option = document.createElement("option");
-        option.value = precios[x].Id;
-        option.appendChild(document.createTextNode(precios[x].Name));
-        document.getElementById("CmbEspecialidad").appendChild(option);
-    }*/
-}
-
 function AddObservaciones(sender) {
     var id = sender.parentNode.parentNode.id;
     $("#ActoSelected").val(id);
@@ -283,7 +266,7 @@ function AddActoDescuento(acto) {
     $("#TxtActoDescuento").val(acto.Name);
     $("#TxtAmountDescuento").val("");
     actoDescuento = acto;
-    var dialog = $("#popupActoDescuento").removeClass("hide").dialog({
+    $("#popupActoDescuento").removeClass("hide").dialog({
         "resizable": false,
         "modal": true,
         "title": Dictionary.Item_Presupuesto_ActoDescuento_PopupTitle,
@@ -447,12 +430,11 @@ Date.prototype.addDays = function (days) {
     var date = new Date(this.valueOf());
     date.setDate(date.getDate() + days);
     return date;
-}
+};
 
 window.onload = function () {
     $("h1").html($("#DataAseguradoName").html());
     $("#HeaderButtons").html($("#DataColectivo").html());
-    FillComboEspecialidades();
     $("#BtnAddActo").attr("disabled", "disabled");
     $("#BtnAddActo").on("click", AddActo);
     $("#BtnPrint").on("click", Print);
@@ -461,12 +443,12 @@ window.onload = function () {
     GetPresupuestos();
     $("#CmbEspecialidad").chosen().on("chosen:hiding_dropdown", function () {
         nomatchValue = $(".chosen-search input").val();
-        CmbEspecialidadChanged();
+        //CmbEspecialidadChanged();
     }).on("chosen:showing_dropdown", function () {
         $("#CmbEspecialidad").val("");
-        });
-		
-	$("#chosen-container").css("width","99%!important");
+    });
+
+    $("#chosen-container").css("width", "99%!important");
     var date = new Date();
     var options = $.extend({}, $.datepicker.regional["es"], { "autoopen": false, "autoclose": true, "todayHighlight": true, "minDate": date.addDays(-15), "maxDate": FormatDate(new Date(), "/") });
     $(".date-picker").datepicker(options);
@@ -481,11 +463,11 @@ window.onload = function () {
         $("#rowWarningChip").show();
     }
 
-}
+};
 
 window.onresize = function () {
     Resize();
-}
+};
 
 function Resize() {
     var delta = (chip === "") ? 40 : 0;
@@ -545,7 +527,7 @@ function Print() {
             }
 
             GetPresupuestos();
-            window.open("PrintPresupuesto.aspx?presupuestoId=" + msg.d.ReturnValue + "&centroId=" + ApplicationUser.Id);
+            window.open("PrintPresupuesto.aspx?polizaId=" + polizaId + "&presupuestoId=" + msg.d.ReturnValue);
         },
         "error": function (msg) {
             alertUI(msg.responseText);
@@ -579,7 +561,7 @@ function PrintAndSave() {
         "success": function (msg) {
             console.log(msg);
             RealizarPresupuesto(msg.d.ReturnValue);
-            window.open("PrintPresupuesto.aspx?presupuestoId=" + msg.d.ReturnValue + "&centroId=" + ApplicationUser.Id);            
+            window.open("PrintPresupuesto.aspx?presupuestoId=" + msg.d.ReturnValue + "&polizaId=" + polizaId);            
             
 
             
@@ -604,7 +586,7 @@ function SaveAndRealizado() {
     $("#FechaTxT").show();
 
     $("#TxtActoObservaciones").val("");
-    var dialog = $("#popupFechaRealizado").removeClass("hide").dialog({
+    $("#popupFechaRealizado").removeClass("hide").dialog({
         "resizable": false,
         "modal": true,
         "title": Dictionary.Presupuesto_Popup_Date,
@@ -700,7 +682,7 @@ function RenderPresupuestos() {
             if (x > 0) {
                 res += "<div class=\"col col-xs-12\" style=\"font-size:12px;text-align:right;\">";
                 res += "<button class=\"btn btn-success\" type=\"button\" id=\"BtnRealizar\" onclick=\"RecuperarPresupuesto('" + actualId + "','" + actualCode + "');\"><i class=\"fas fa-save bigger-110\"></i>&nbsp;" + Dictionary.Item_Presupuesto_Get + "</button>&nbsp;";
-                res += "<button class=\"btn btn-info\" type=\"button\" id=\"BtnExportList\" onclick=\"window.open('PrintPresupuesto.aspx?presupuestoId=" + actualId + "&centroId=" + ApplicationUser.Id + "');\"><i class=\"fas fa-print bigger-110\"></i>&nbsp;" + Dictionary.Item_Presupuesto_Btn_Print + "</button>&nbsp;&nbsp;&nbsp;";
+                res += "<button class=\"btn btn-info\" type=\"button\" id=\"BtnExportList\" onclick=\"window.open('PrintPresupuesto.aspx?presupuestoId=" + actualId + "&polizaId=" + polizaId + "');\"><i class=\"fas fa-print bigger-110\"></i>&nbsp;" + Dictionary.Item_Presupuesto_Btn_Print + "</button>&nbsp;&nbsp;&nbsp;";
                 res += "<button class=\"btn btn-danger\" type=\"button\" id=\"BtnEliminar\" onclick=\"DescartarPresupuesto('" + actualId + "','" + actualCode + "');\"><i class=\"fas fa-trash bigger-110\"></i>&nbsp;" + Dictionary.Common_Discard + "</button></div>";
                 res += "</div></div></div>";
             }
@@ -735,7 +717,7 @@ function RenderPresupuestos() {
     if (x > 0) {
         res += "<div class=\"col col-xs-12\" style=\"font-size:12px;text-align:right;\">";
         res += "<button class=\"btn btn-success\" type=\"button\" id=\"BtnRealizar\" onclick=\"RecuperarPresupuesto('" + actualId + "','" + actualCode + "');\"><i class=\"fas fa-save bigger-110\"></i>&nbsp;" + Dictionary.Item_Presupuesto_Get + "</button>&nbsp;";
-        res += "<button class=\"btn btn-info\" type=\"button\" id=\"BtnExportList\" onclick=\"window.open('PrintPresupuesto.aspx?presupuestoId=" + actualId + "&centroId=" + ApplicationUser.Id + "');\"><i class=\"fas fa-print bigger-110\"></i>&nbsp;" + Dictionary.Item_Presupuesto_Btn_Print + "</button>&nbsp;&nbsp;&nbsp;";
+        res += "<button class=\"btn btn-info\" type=\"button\" id=\"BtnExportList\" onclick=\"window.open('PrintPresupuesto.aspx?presupuestoId=" + actualId + "&polizaId=" + polizaId + "');\"><i class=\"fas fa-print bigger-110\"></i>&nbsp;" + Dictionary.Item_Presupuesto_Btn_Print + "</button>&nbsp;&nbsp;&nbsp;";
         res += "<button class=\"btn btn-danger\" type=\"button\" id=\"BtnEliminar\" onclick=\"DescartarPresupuesto('" + actualId + "','" + actualCode + "');\"><i class=\"fas fa-trash bigger-110\"></i>&nbsp;" + Dictionary.Common_Discard + "</button></div>";
         res += "</div></div></div>";
     }

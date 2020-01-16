@@ -7,6 +7,7 @@ using System.IO;
 using System.Web;
 using System.Web.UI;
 using AspadLandFramework;
+using AspadLandFramework.Item;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using SbrinnaCoreFramework.DataAccess;
@@ -15,9 +16,10 @@ public partial class PrintPresupuesto : Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        var centroid = Request.QueryString["centroId"];
         var presupuestoId = Request.QueryString["presupuestoId"];
-        var centro = ApplicationUser.GetById(centroid);
+        var centro = HttpContext.Current.Session["user"] as ApplicationUser;
+        var polizaId = Request.QueryString["polizaId"];
+        var poliza = Poliza.ById(polizaId);
         var dictionary = ApplicationDictionary.Load("es");
 
         var path = HttpContext.Current.Request.PhysicalApplicationPath;
@@ -82,15 +84,13 @@ public partial class PrintPresupuesto : Page
 
         var presupuestoCodigo = string.Empty;
         var presupuestoFecha = string.Empty;
-        var mascotaId = Guid.Empty;
 
-        var aseguradoNombre = string.Empty;
-        var poliza = string.Empty;
+        var aseguradoNombre = poliza.AseguradoNombre;
         var aseguradoDireccion = string.Empty;
         var aseguradoCP = string.Empty;
         var aseguradoPoblacion = string.Empty;
         var aseguradoProvincia = string.Empty;
-        var aseguradoNIF = string.Empty;
+        var aseguradoNIF = poliza.AseguradoNIF;
         var observaciones = string.Empty;
 
         // Linea Total
@@ -152,19 +152,19 @@ public partial class PrintPresupuesto : Page
 
         /* CREATE PROCEDURE ASPADLAND_GetPresupuestoPendienteByPresupuestoId
          *   @PresupuestoId uniqueidentifier,
-         *   @CentroId uniqueidentifier */
+         *   @CentroId nvarchar(50) */
         bool propios = false;
         bool hasObservaciones = false;
         decimal totalBaseCost = 0;
         decimal totalBaseCostASPAD = 0;
-        using (var cmd = new SqlCommand("ASPADLAND_GetPresupuestoPendienteByPresupuestoId"))
+        using (var cmd = new SqlCommand("ASPADLAND_Salesforce_GetPresupuestoPendienteByPresupuestoId"))
         {
             cmd.CommandType = CommandType.StoredProcedure;
             using(var cnn = new SqlConnection(ConfigurationManager.ConnectionStrings["cns"].ConnectionString))
             {
                 cmd.Connection = cnn;
                 cmd.Parameters.Add(DataParameter.Input("@PresupuestoId", presupuestoId));
-                cmd.Parameters.Add(DataParameter.Input("@CentroId", centroid));
+                cmd.Parameters.Add(DataParameter.Input("@CentroId", centro.Id));
                 try
                 {
                     cmd.Connection.Open();
@@ -175,8 +175,6 @@ public partial class PrintPresupuesto : Page
                             observaciones = rdr.GetString(9);
                             presupuestoCodigo = rdr.GetString(1);
                             presupuestoFecha = string.Format(CultureInfo.InvariantCulture, @"{0:dd/MM/yyyy}", rdr.GetDateTime(7));
-                            mascotaId = rdr.GetGuid(8);
-                            poliza = rdr.GetString(11);
 
                             string amountText = string.Empty;
                             string totalRowText = string.Empty;
@@ -319,50 +317,10 @@ public partial class PrintPresupuesto : Page
             }
         }
 
-        if (mascotaId != Guid.Empty)
-        {
-            /* CREATE PROCEDURE ASPADLAND_Asegurado_ByMascota
-             *   @MascotaId uniqueidentifier  */
-            using (var cmd = new SqlCommand("ASPADLAND_Asegurado_ByMascota"))
-            {
-                cmd.CommandType = CommandType.StoredProcedure;
-                using (var cnn = new SqlConnection(ConfigurationManager.ConnectionStrings["cns"].ConnectionString))
-                {
-                    cmd.Connection = cnn;
-                    cmd.Parameters.Add(DataParameter.Input("@MascotaId", mascotaId));
-                    try
-                    {
-                        cmd.Connection.Open();
-                        using (var rdr = cmd.ExecuteReader())
-                        {
-                            while (rdr.Read())
-                            {
-                                aseguradoNombre = rdr.GetString(0);
-                                aseguradoNIF = rdr.GetString(1);
-                                aseguradoDireccion = rdr.GetString(2);
-                                aseguradoCP = rdr.GetString(3);
-                                aseguradoPoblacion = rdr.GetString(4);
-                                aseguradoProvincia = rdr.GetString(5);
-                            }
-                        }
-                    }
-                    finally
-                    {
-                        if (cmd.Connection.State != ConnectionState.Closed)
-                        {
-                            cmd.Connection.Close();
-                        }
-                    }
-                }
-            }
-        }
-
-
         var la1 = new Chunk(dictionary["PDF_Albaran"] + ": ", labelFont);
         var la2 = new Chunk(presupuestoCodigo + Environment.NewLine, FontFactory.GetFont(FontFactory.HELVETICA, 10, Font.BOLD));
         var la3 = new Chunk(dictionary["PDF_Fecha"] + ": ", labelFont);
         var la4 = new Chunk(presupuestoFecha, dataFont);
-
 
         var p1 = new Paragraph
         {
@@ -372,13 +330,11 @@ public partial class PrintPresupuesto : Page
             la4
         };
 
-
         document.Add(new Paragraph(Environment.NewLine + Environment.NewLine + Environment.NewLine + Environment.NewLine));
-
 
         var lb1 = new Chunk(aseguradoNombre + Environment.NewLine, dataFont);
         var lb2 = new Chunk(dictionary["PDF_Poliza"] + ": " , labelFont);
-        var lb3 = new Chunk(poliza + Environment.NewLine, dataFont);
+        var lb3 = new Chunk(poliza.Numero + Environment.NewLine, dataFont);
 
         var p2 = new Paragraph
         {
@@ -458,7 +414,6 @@ public partial class PrintPresupuesto : Page
             tableCostsPropios.AddCell(ToolsPdf.DataCell(string.Empty, labelFont));
             tableCostsPropios.AddCell(ToolsPdf.DataCell(string.Empty, labelFont));
             tableCostsPropios.AddCell(ToolsPdf.DataCell(string.Empty, labelFont));
-
 
             tableCostsPropios.AddCell(TotalCell(string.Empty));
             tableCostsPropios.AddCell(TotalCell(string.Empty));

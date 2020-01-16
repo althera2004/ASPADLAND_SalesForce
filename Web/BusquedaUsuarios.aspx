@@ -38,6 +38,7 @@
         var Colectivos = <%=this.Colectivos%>;
         var aseguradoId = "<%=this.AseguradoId %>";
         var polizaId = "<%=this.PolizaId %>";
+        var tarifaId = "<%=this.TarifaId %>";
     </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptHeadContentHolder" Runat="Server">
